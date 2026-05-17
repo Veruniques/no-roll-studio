@@ -34,6 +34,42 @@ const GREEN_SHADES = [
   '#3a9670', // mint-leaning
 ];
 
+/* Real project data, keyed by face index (0..5).
+   Used to populate the hover preview for the 6 center (clickable) tiles. */
+const THUMB_BASE = 'https://cdn.prod.website-files.com/69cceb194fe2acd762a294ab/';
+const PROJECT_DATA = [
+  {
+    title: 'AI sponsor spot for cinema, for <em>RB</em>',
+    desc:  'A cinematic AI sponsor spot directed for RB — full creative direction, no random generation.',
+    thumb: THUMB_BASE + '6a0a14e1703fe31852d877e5_RB%20thumbnail_1.4.1.avif',
+  },
+  {
+    title: 'YT commercial for <em>Monoprix</em>',
+    desc:  'YouTube-native commercial for Monoprix, built with AI tools under a tight creative brief.',
+    thumb: THUMB_BASE + '6a0a14e1dcc86926c3cfe27a_Monoprix%20thumbnail_1.7.1.avif',
+  },
+  {
+    title: 'Voice commercial for <em>Fameplay</em>',
+    desc:  'Voice-driven AI commercial for Fameplay — narrative direction meets generative production.',
+    thumb: THUMB_BASE + '6a0a14e1752a7b23433a3695_Voice%20Advertisement_1.10.1.avif',
+  },
+  {
+    title: 'AI remake of <em>Kofola</em> commercial',
+    desc:  'A directed AI remake of an iconic Kofola commercial — asked by the original creator.',
+    thumb: THUMB_BASE + '6a0a14e19d8abdb601506400_KofolaThumbnail_1.6.1.avif',
+  },
+  {
+    title: 'Hybrid production commercial for <em>RB</em>',
+    desc:  'Mixed-medium commercial for RB combining live footage with AI-directed sequences.',
+    thumb: THUMB_BASE + '6a0a14e1f34c17ceb171e0fd_RB%20GENZ%20AD%20thumbnail_2.1.1.avif',
+  },
+  {
+    title: 'AI commercial for <em>PPAS</em>',
+    desc:  'AI-directed TV commercial for PPAS — directed end-to-end, not generated.',
+    thumb: THUMB_BASE + '6a0a14e14763583705e2dabc_PPAS%20thumbnail_1.2.2.avif',
+  },
+];
+
 const TILES = [];
 for (let f = 0; f < 6; f++) {
   for (let r = 0; r < 3; r++) {
@@ -49,13 +85,15 @@ for (let f = 0; f < 6; f++) {
       // portfolio section's project numbering. Outer green tiles still use
       // their grid position for visual identity (not user-facing).
       const projectNum = isCenter ? String(f + 1).padStart(2, '0') : String(idx + 1).padStart(2, '0');
+      const projectData = isCenter ? PROJECT_DATA[f] : null;
 
       TILES.push({
         id: `${f}-${r}-${c}`,
         num: isCenter ? projectNum : `${f}.${r}${c}`,
         face: FACE_LABELS[f],
-        title: isCenter ? `Project ${projectNum}` : `Project ${String(idx + 1).padStart(2, '0')}`,
-        desc: `Placeholder description for tile ${f}.${r}${c}. Swap this with your real project copy.`,
+        title: isCenter ? projectData.title : `Project ${String(idx + 1).padStart(2, '0')}`,
+        desc:  isCenter ? projectData.desc  : `Placeholder description for tile ${f}.${r}${c}. Swap this with your real project copy.`,
+        thumb: isCenter ? projectData.thumb : null,
         tag: CATEGORIES[f],
         color: isCenter ? '#000000' : GREEN_SHADES[greenIdx],
         link: isCenter ? `#project-${projectNum}` : `#project-${String(idx + 1).padStart(2, '0')}`,
@@ -125,9 +163,49 @@ scene.add(cubeGroup);
 
 const cubies = [];
 
+/* Texture loader for project thumbnails. The 6 center tiles get a real
+   project image mapped to their material as soon as it loads asynchronously.
+   Until loaded, the tile keeps its plain dark color. */
+const textureLoader = new THREE.TextureLoader();
+textureLoader.crossOrigin = 'anonymous';
+const tileTextures = []; // index 0..5 = face → texture (or null)
+for (let f = 0; f < 6; f++) {
+  textureLoader.load(
+    PROJECT_DATA[f].thumb,
+    (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tileTextures[f] = tex;
+      // Push the texture into any materials already created for this face's center tile.
+      const tileId = `${f}-1-1`;
+      cubies.forEach(cubie => {
+        if (!Array.isArray(cubie.material)) return;
+        cubie.material.forEach(mat => {
+          if (mat.userData?.tile?.id === tileId) {
+            mat.map = tex;
+            mat.color.set(0xffffff); // neutralize tint so texture shows true colors
+            mat.needsUpdate = true;
+          }
+        });
+      });
+    },
+    undefined,
+    () => { /* load fail — leave tile as plain color */ }
+  );
+}
+
 function tileMaterial(tile) {
+  // Center (project) tiles use white base color so the loaded texture displays correctly.
+  // If the texture for this face is already loaded, apply it immediately.
+  let texture = null;
+  let baseColor = tile.color;
+  if (tile.isCenter) {
+    const faceIdx = parseInt(tile.id.split('-')[0], 10);
+    texture = tileTextures[faceIdx] || null;
+    if (texture) baseColor = '#ffffff';
+  }
   const mat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(tile.color),
+    color: new THREE.Color(baseColor),
+    map: texture,
     roughness: 0.45,
     metalness: 0.05,
   });
@@ -530,7 +608,7 @@ function checkHover() {
       if (tile.id !== hoveredTileId) {
         hoveredTileId = tile.id;
         prevNum.textContent  = `PROJECT ${tile.num}`;
-        prevSwatch.style.setProperty('--swatch', tile.color);
+        prevSwatch.src       = tile.thumb || '';
         prevTitle.innerHTML  = tile.title;
         prevDesc.textContent = tile.desc;
         prevTag.textContent  = tile.tag;
