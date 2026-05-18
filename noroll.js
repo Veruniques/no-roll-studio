@@ -1077,41 +1077,45 @@ function updateFrame() {
 });
 
 /* =====================================================================
-   FORM SUBMISSION via mailto: — with validation + anti-bot honeypot.
+   FORM SUBMISSION — Formspree (one-click, no mail client required).
 
-   What's protected:
-   - Email format checked against a stricter regex than HTML5's permissive one
+   How it works:
+   - User clicks Send → fields posted to Formspree's endpoint via fetch()
+   - Formspree forwards as email to veronikadominikova@gmail.com
+   - User sees "Pitch sent" confirmation inline; no mail client opens
+   - On failure, falls back to mailto: so the lead isn't lost
+
+   What's protected (unchanged from before):
+   - Strict email regex (not HTML5's permissive default)
    - Scene must have at least 2 characters
-   - Honeypot field: if filled in, treat as a bot and silently no-op
-   - Time-on-page check: real users take >2s to fill the form; bots are faster
-   - localStorage rate limit: 1 submit per 30s from the same browser
-
-   What this WON'T stop:
-   - A determined attacker who reads the HTML and crafts a fake submission
-   - For real spam protection, switch from mailto: to a service like Formspree
-     or Web3Forms which provides server-side reCAPTCHA.
+   - Honeypot field: bots that fill it get silently rejected
+   - Time-on-page check: real users take >2s, bots are instant
+   - localStorage rate limit: 1 submit per 30s per browser
+   - Formspree adds its own server-side spam filter on top of all this
    ===================================================================== */
-const DIRECTOR_EMAIL = 'hello@noroll.studio'; // <-- replace with real email
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mnjrqrkj';
+const FALLBACK_EMAIL = 'veronikadominikova@gmail.com'; // used if Formspree is down
 const PAGE_LOAD_TIME = Date.now();
 const RATE_LIMIT_MS = 30_000;
 
-// Stricter email regex than HTML5 default. Requires:
-//   - chars before @
-//   - chars after @
-//   - dot + 2+ letter TLD
-//   - no spaces, no double-dots
 const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const honeypotEl = document.getElementById('pitch-website');
-const errorEl = document.getElementById('pitch-error');
+const errorEl    = document.getElementById('pitch-error');
+const submitBtn  = document.getElementById('pitch-submit');
 
 function showError(msg, focusEl) {
   errorEl.textContent = msg;
+  errorEl.classList.remove('success');
   errorEl.classList.add('show');
   if (focusEl) focusEl.focus();
 }
+function showSuccess(msg) {
+  errorEl.textContent = msg;
+  errorEl.classList.add('show', 'success');
+}
 function clearError() {
-  errorEl.classList.remove('show');
+  errorEl.classList.remove('show', 'success');
   errorEl.textContent = '';
 }
 
@@ -1120,18 +1124,17 @@ function clearError() {
   el.addEventListener('input', clearError);
 });
 
-document.getElementById('pitch-submit').addEventListener('click', (e) => {
+submitBtn.addEventListener('click', async (e) => {
   e.preventDefault();
   clearError();
 
-  // 1. Bot check: honeypot. If a bot dumbly filled in the hidden field,
-  //    silently no-op. We pretend success so the bot doesn't retry/adapt.
+  // 1. Anti-bot: honeypot
   if (honeypotEl.value) return;
 
-  // 2. Bot check: time-on-page. Most bots fire instantly; humans need >2s.
+  // 2. Anti-bot: time-on-page
   if (Date.now() - PAGE_LOAD_TIME < 2000) return;
 
-  // 3. Rate limit: prevent rapid resubmits from the same browser.
+  // 3. Rate limit
   try {
     const last = parseInt(localStorage.getItem('pitch-last-sent') || '0', 10);
     if (Date.now() - last < RATE_LIMIT_MS) {
@@ -1161,31 +1164,68 @@ document.getElementById('pitch-submit').addEventListener('click', (e) => {
     return;
   }
 
-  // All checks passed. Record submit time for rate limit.
-  try { localStorage.setItem('pitch-last-sent', String(Date.now())); } catch (_) {}
+  // 7. Submit to Formspree. Lock the button so impatient users don't double-click.
+  const originalLabel = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
 
-  // Compose mailto
-  const mailSubject = `Pitch: ${subject}` + (currentMood ? ` (${currentMood})` : '');
-  const lines = [
-    'SCENE 01 / TAKE 1',
-    '─────────────────',
-    '',
-    'SCENE:',
-    subject,
-    '',
-    'TYPE OF PRODUCTION / MEDIA:',
-    media || '(not specified)',
-    '',
-    'MOOD:',
-    currentMood ? currentMood.toUpperCase() : '(not chosen)',
-    '',
-    '─────────────────',
-    'Directed by: ' + email,
-  ];
-  const mailBody = lines.join('\n');
+  const payload = {
+    scene: subject,
+    type_of_production: media || '(not specified)',
+    mood: currentMood ? currentMood.toUpperCase() : '(not chosen)',
+    email: email,                  // Formspree treats this as the sender
+    _replyto: email,               // makes "Reply" in Gmail go to sender, not Formspree
+    _subject: `Pitch: ${subject}` + (currentMood ? ` (${currentMood})` : ''),
+  };
 
-  const href = 'mailto:' + DIRECTOR_EMAIL +
-               '?subject=' + encodeURIComponent(mailSubject) +
-               '&body=' + encodeURIComponent(mailBody);
-  window.location.href = href;
+  try {
+    const response = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      // Success — record submit time, clear form, show confirmation
+      try { localStorage.setItem('pitch-last-sent', String(Date.now())); } catch (_) {}
+      pitchSubject.value = '';
+      pitchMedia.value = '';
+      pitchEmail.value = '';
+      // Trigger updateFrame to clear the slate preview too
+      if (typeof updateFrame === 'function') updateFrame();
+      // Clear mood
+      if (typeof currentMood !== 'undefined' && currentMood !== null) {
+        document.querySelectorAll('.pitch-chip.active').forEach(c => c.classList.remove('active'));
+        const moodLbl = document.getElementById('frame-mood-label');
+        if (moodLbl) moodLbl.textContent = 'MOOD: —';
+        currentMood = null;
+        pitchFrame.className = 'pitch-frame';
+      }
+      showSuccess('Pitch sent. I\'ll get back to you soon.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    } else {
+      // Server error from Formspree — let user know AND fall back to mailto
+      throw new Error(`Formspree returned ${response.status}`);
+    }
+  } catch (err) {
+    console.warn('Formspree submission failed, falling back to mailto:', err);
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalLabel;
+    // Fallback: open mailto so the lead is not lost
+    const mailLines = [
+      'SCENE:', subject, '',
+      'TYPE OF PRODUCTION / MEDIA:', media || '(not specified)', '',
+      'MOOD:', currentMood ? currentMood.toUpperCase() : '(not chosen)', '',
+      'Directed by: ' + email,
+    ];
+    const href = 'mailto:' + FALLBACK_EMAIL +
+                 '?subject=' + encodeURIComponent(payload._subject) +
+                 '&body=' + encodeURIComponent(mailLines.join('\n'));
+    showError('Sending failed — opening your mail app as backup.');
+    setTimeout(() => { window.location.href = href; }, 800);
+  }
 });
