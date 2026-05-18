@@ -65,7 +65,7 @@ const PROJECT_DATA = [
   },
   {
     title: 'AI commercial for <em>PPAS</em>',
-    desc:  'AI-directed TV commercial for PPAS — directed end-to-end, not generated.',
+    desc:  'A fully AI-generated TV commercial for PPAS — proof that direction matters even when every frame is generated.',
     thumb: THUMB_BASE + '6a0a14e14763583705e2dabc_PPAS%20thumbnail_1.2.2.avif',
   },
 ];
@@ -504,6 +504,65 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && hamburgerBtn.classList.contains('open')) setMenuOpen(false);
 });
+
+/* =====================================================================
+   VIMEO MUTE/UNMUTE TOGGLE
+   Each portfolio card has a button that toggles audio on its Vimeo video.
+   When one card is unmuted, all others are automatically muted — playing
+   2+ audio streams at once is bad UX. The player.js library is loaded
+   asynchronously in the markup; we wait for it before wiring up.
+   ===================================================================== */
+function initVimeoUnmute() {
+  if (typeof Vimeo === 'undefined') {
+    // player.js hasn't loaded yet — try again shortly
+    setTimeout(initVimeoUnmute, 100);
+    return;
+  }
+  const buttons = document.querySelectorAll('.video-unmute');
+  if (buttons.length === 0) return;
+
+  // Build a Vimeo.Player wrapper for each iframe so we can call setMuted on it.
+  const players = new Map(); // button → player instance
+  buttons.forEach(btn => {
+    const iframeId = btn.dataset.vimeoId;
+    const iframe = document.getElementById(iframeId);
+    if (!iframe) return;
+    try {
+      const player = new Vimeo.Player(iframe);
+      players.set(btn, player);
+    } catch (err) {
+      console.warn(`Could not init Vimeo.Player for ${iframeId}:`, err);
+    }
+  });
+
+  // Click handler — unmute this video, mute all others
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const thisPlayer = players.get(btn);
+      if (!thisPlayer) return;
+
+      const isCurrentlyUnmuted = btn.classList.contains('is-unmuted');
+      // Mute every video first
+      players.forEach((player, b) => {
+        player.setMuted(true).catch(() => {});
+        b.classList.remove('is-unmuted');
+        b.setAttribute('aria-label', 'Unmute video');
+      });
+      // If this one wasn't unmuted before, unmute it now (toggle behaviour)
+      if (!isCurrentlyUnmuted) {
+        thisPlayer.setMuted(false).catch(err => {
+          console.warn('setMuted(false) failed:', err);
+        });
+        thisPlayer.setVolume(1.0).catch(() => {});
+        btn.classList.add('is-unmuted');
+        btn.setAttribute('aria-label', 'Mute video');
+      }
+    });
+  });
+}
+// Kick off after a short delay — gives player.js (async) a moment to land
+window.addEventListener('load', initVimeoUnmute);
 
 // Smooth scroll to a project anchor (`#project-01` etc.) from a cube tile click.
 // Uses scrollIntoView so it works whether or not the project section is in view yet.
