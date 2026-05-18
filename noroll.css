@@ -815,6 +815,47 @@
   }
   /* Hide the play-arrow ::after on cards that have an autoplaying video — would be redundant */
   .project-video.has-video::after { display: none; }
+
+  /* Unmute/mute toggle button — bottom-right of each video card.
+     Shows muted icon by default; when this card is the "active" unmuted one,
+     the button gets .is-unmuted and the icon flips to a regular speaker. */
+  .video-unmute {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    padding: 0;
+  }
+  .video-unmute:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.05);
+  }
+  /* Icon swap: muted shown by default, unmuted hidden */
+  .video-unmute .icon-unmuted { display: none; }
+  .video-unmute.is-unmuted .icon-muted { display: none; }
+  .video-unmute.is-unmuted .icon-unmuted { display: block; }
+  /* Highlight the active unmuted card's button so user knows which is playing */
+  .video-unmute.is-unmuted {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  /* Hide on mobile if you decide it's too cramped — opt-in only */
+  @media (max-width: 480px) {
+    .video-unmute { width: 36px; height: 36px; bottom: 10px; right: 10px; }
+  }
   /* Placeholder gradients — still used as fallbacks while images load */
   .project-video.ph-1 { background: linear-gradient(135deg, #0a3b29 0%, #1a4d3a 100%); }
   .project-video.ph-2 { background: linear-gradient(135deg, #FF5700 0%, #ff8844 100%); }
