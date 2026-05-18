@@ -795,100 +795,15 @@
     aspect-ratio: 16/9;
     background: var(--ink);
     overflow: hidden;
-    cursor: none;
   }
-  /* Real thumbnail/video fills the 16:9 frame */
-  .project-video img,
   .project-video iframe {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
     border: 0;
   }
-  /* When a project-video has a poster (still loading), show it as background */
-  .project-video.has-video {
-    background-size: cover;
-    background-position: center;
-  }
-  /* Hide the play-arrow ::after on cards that have an autoplaying video — would be redundant */
-  .project-video.has-video::after { display: none; }
-
-  /* Unmute/mute toggle — large, centered, orange. No background, just the icon.
-     Only visible once the video has started playing (parent gets .is-playing).
-     Auto-fades after a few seconds; returns on hover for re-muting. */
-  .video-unmute {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    width: 96px;
-    height: 96px;
-    border: none;
-    background: transparent;
-    color: var(--accent);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    /* Hidden by default — shown by .is-playing on parent */
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s, transform 0.2s;
-    /* Subtle drop shadow so the orange icon stays visible on bright video frames */
-    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
-  }
-  .video-unmute svg { width: 100%; height: 100%; display: block; }
-  /* Visible whenever the video is playing — appears, then fades after 3.5s */
-  .project-video.is-playing .video-unmute {
-    opacity: 1;
-    pointer-events: auto;
-    animation: unmuteAutoFade 4s forwards;
-  }
-  /* On hover over the video card, button comes back to full opacity and overrides the fade */
-  .project-video:hover .video-unmute {
-    opacity: 1;
-    pointer-events: auto;
-    animation: none;
-  }
-  /* Click feedback */
-  .video-unmute:hover { transform: translate(-50%, -50%) scale(1.1); }
-  .video-unmute:active { transform: translate(-50%, -50%) scale(0.95); }
-  /* Icon swap — muted icon shown by default, swaps when unmuted */
-  .video-unmute .icon-unmuted { display: none; }
-  .video-unmute.is-unmuted .icon-muted { display: none; }
-  .video-unmute.is-unmuted .icon-unmuted { display: block; }
-  @keyframes unmuteAutoFade {
-    0%   { opacity: 1; }
-    70%  { opacity: 1; }
-    100% { opacity: 0; }
-  }
-  @media (max-width: 720px) {
-    .video-unmute { width: 72px; height: 72px; }
-  }
-  /* Placeholder gradients — still used as fallbacks while images load */
-  .project-video.ph-1 { background: linear-gradient(135deg, #0a3b29 0%, #1a4d3a 100%); }
-  .project-video.ph-2 { background: linear-gradient(135deg, #FF5700 0%, #ff8844 100%); }
-  .project-video.ph-3 { background: linear-gradient(135deg, #d4a373 0%, #f4d8b0 100%); }
-  .project-video.ph-4 { background: linear-gradient(135deg, #14110f 0%, #3a2a20 100%); }
-  .project-video.ph-5 { background: linear-gradient(135deg, #FFEED3 0%, #f4d8b0 100%); }
-  .project-video.ph-6 { background: linear-gradient(135deg, #1a4d3a 0%, #FF5700 100%); }
-  .project-video::after {
-    content: '▶';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--bg);
-    font-size: 64px;
-    mix-blend-mode: difference;
-    transition: transform 0.3s;
-  }
-  .project-video:hover::after { transform: translate(-50%, -50%) scale(1.2); }
 
   /* ====== Section: Contact — Pitch in a frame ====== */
   .contact {
