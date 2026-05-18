@@ -1197,14 +1197,14 @@
     opacity: 0.5;
   }
   .preview .swatch {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto;
+    display: block;
+    width: 272px !important;
+    height: 153px !important;
+    max-width: 100%;
     margin: 12px 0;
     background: rgba(255,255,255,0.04);
-    object-fit: cover;
+    object-fit: cover !important;
     object-position: center;
-    display: block;
     transition: opacity 0.2s;
   }
   .preview .swatch[src=""],
