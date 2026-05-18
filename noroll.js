@@ -165,15 +165,40 @@ const cubies = [];
 
 /* Texture loader for project thumbnails. The 6 center tiles get a real
    project image mapped to their material as soon as it loads asynchronously.
-   Until loaded, the tile keeps its plain dark color. */
+   The texture's UVs are remapped to behave like CSS `object-fit: cover` —
+   so 16:9 thumbnails crop into the square face instead of being squeezed. */
 const textureLoader = new THREE.TextureLoader();
 textureLoader.crossOrigin = 'anonymous';
 const tileTextures = []; // index 0..5 = face → texture (or null)
+
+// Map a texture's UV so its center fills a square face without distortion.
+// For a 16:9 image into a 1:1 face: repeat.x = 9/16, offset.x = (1-9/16)/2.
+function applyCoverUV(tex, srcAspect, dstAspect) {
+  // srcAspect = image w/h (16:9 → 1.777); dstAspect = face w/h (1 for square)
+  const ratio = srcAspect / dstAspect;
+  if (ratio > 1) {
+    // image wider than face — sample horizontal middle
+    tex.repeat.set(1 / ratio, 1);
+    tex.offset.set((1 - 1/ratio) / 2, 0);
+  } else if (ratio < 1) {
+    // image taller than face — sample vertical middle
+    tex.repeat.set(1, ratio);
+    tex.offset.set(0, (1 - ratio) / 2);
+  }
+}
+
 for (let f = 0; f < 6; f++) {
   textureLoader.load(
     PROJECT_DATA[f].thumb,
     (tex) => {
       tex.colorSpace = THREE.SRGBColorSpace;
+      // Assume thumbnails are 16:9 (the 6 AVIF files match). If a thumbnail
+      // is actually a different aspect, applyCoverUV still does the right thing
+      // because we use the loaded image's true dimensions:
+      const srcAspect = (tex.image?.width && tex.image?.height)
+        ? tex.image.width / tex.image.height
+        : 16 / 9;
+      applyCoverUV(tex, srcAspect, 1); // 1 = square face
       tileTextures[f] = tex;
       // Push the texture into any materials already created for this face's center tile.
       const tileId = `${f}-1-1`;
@@ -182,7 +207,7 @@ for (let f = 0; f < 6; f++) {
         cubie.material.forEach(mat => {
           if (mat.userData?.tile?.id === tileId) {
             mat.map = tex;
-            mat.color.set(0xffffff); // neutralize tint so texture shows true colors
+            if (mat.color) mat.color.set(0xffffff);
             mat.needsUpdate = true;
           }
         });
@@ -194,18 +219,21 @@ for (let f = 0; f < 6; f++) {
 }
 
 function tileMaterial(tile) {
-  // Center (project) tiles use white base color so the loaded texture displays correctly.
-  // If the texture for this face is already loaded, apply it immediately.
-  let texture = null;
-  let baseColor = tile.color;
+  // Center (project) tiles: MeshBasicMaterial — does NOT react to scene lights,
+  // so the thumbnail displays at its true colors with no shadows or darkening.
+  // Outer green tiles: MeshStandardMaterial — keeps the 3D-lit cube aesthetic.
   if (tile.isCenter) {
     const faceIdx = parseInt(tile.id.split('-')[0], 10);
-    texture = tileTextures[faceIdx] || null;
-    if (texture) baseColor = '#ffffff';
+    const texture = tileTextures[faceIdx] || null;
+    const mat = new THREE.MeshBasicMaterial({
+      color: texture ? 0xffffff : new THREE.Color(tile.color),
+      map: texture,
+    });
+    mat.userData.tile = tile;
+    return mat;
   }
   const mat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(baseColor),
-    map: texture,
+    color: new THREE.Color(tile.color),
     roughness: 0.45,
     metalness: 0.05,
   });
