@@ -171,36 +171,51 @@ const cubies = [];
    bulletproof: no stretching, no UV math, the source is already square. */
 const tileTextures = []; // index 0..5 = face → THREE.CanvasTexture (or null)
 
-function loadCenterCroppedTexture(url, onReady) {
+function loadCenterCroppedTexture(url, faceIdx, onReady) {
   const img = new Image();
   img.crossOrigin = 'anonymous';
   img.onload = () => {
-    // Draw the image center-cropped into a square canvas.
-    // Use a reasonably high resolution to avoid blurriness on close zoom.
     const SIZE = 512;
     const canvas = document.createElement('canvas');
     canvas.width = SIZE;
     canvas.height = SIZE;
     const ctx = canvas.getContext('2d');
-    // Compute the largest square that fits centered in the source image
+    // Center-crop: largest square that fits inside the source image
     const srcSide = Math.min(img.width, img.height);
     const sx = (img.width  - srcSide) / 2;
     const sy = (img.height - srcSide) / 2;
-    ctx.drawImage(img, sx, sy, srcSide, srcSide, 0, 0, SIZE, SIZE);
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.needsUpdate = true;
-    onReady(tex);
+    try {
+      ctx.drawImage(img, sx, sy, srcSide, srcSide, 0, 0, SIZE, SIZE);
+      // Test if canvas is tainted (CORS rejected the read) by trying to read it
+      ctx.getImageData(0, 0, 1, 1);
+      // Canvas is clean — use it as a CanvasTexture
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.needsUpdate = true;
+      console.log(`[cube-tile ${faceIdx}] canvas-cropped texture ready (${img.width}×${img.height} → 512²)`);
+      onReady(tex);
+    } catch (err) {
+      // Canvas was tainted by cross-origin draw. Fall back to using the image
+      // directly as a Texture. The image will be stretched on the square face
+      // (no crop possible without canvas), but at least it shows.
+      console.warn(`[cube-tile ${faceIdx}] canvas tainted (CORS), falling back to direct texture (image will stretch):`, err.message);
+      const tex = new THREE.Texture(img);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.needsUpdate = true;
+      onReady(tex);
+    }
   };
-  img.onerror = () => { /* leave tile as plain color */ };
+  img.onerror = (err) => {
+    console.error(`[cube-tile ${faceIdx}] image load failed:`, url, err);
+  };
   img.src = url;
 }
 
 for (let f = 0; f < 6; f++) {
-  loadCenterCroppedTexture(PROJECT_DATA[f].thumb, (tex) => {
+  loadCenterCroppedTexture(PROJECT_DATA[f].thumb, f, (tex) => {
     tileTextures[f] = tex;
-    // Push the texture into any materials already created for this face's center tile.
     const tileId = `${f}-1-1`;
+    let applied = 0;
     cubies.forEach(cubie => {
       if (!Array.isArray(cubie.material)) return;
       cubie.material.forEach(mat => {
@@ -208,9 +223,11 @@ for (let f = 0; f < 6; f++) {
           mat.map = tex;
           if (mat.color) mat.color.set(0xffffff);
           mat.needsUpdate = true;
+          applied++;
         }
       });
     });
+    console.log(`[cube-tile ${f}] applied to ${applied} material(s)`);
   });
 }
 
