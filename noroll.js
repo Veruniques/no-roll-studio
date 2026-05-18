@@ -530,6 +530,12 @@ function initVimeoUnmute() {
     try {
       const player = new Vimeo.Player(iframe);
       players.set(btn, player);
+      // When the video starts playing, mark the parent .project-video as
+      // .is-playing — this is the CSS trigger that reveals the unmute button.
+      const videoCard = iframe.closest('.project-video');
+      if (videoCard) {
+        player.on('play', () => videoCard.classList.add('is-playing'));
+      }
     } catch (err) {
       console.warn(`Could not init Vimeo.Player for ${iframeId}:`, err);
     }
