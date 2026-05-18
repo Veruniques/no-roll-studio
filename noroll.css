@@ -816,45 +816,59 @@
   /* Hide the play-arrow ::after on cards that have an autoplaying video — would be redundant */
   .project-video.has-video::after { display: none; }
 
-  /* Unmute/mute toggle button — bottom-right of each video card.
-     Shows muted icon by default; when this card is the "active" unmuted one,
-     the button gets .is-unmuted and the icon flips to a regular speaker. */
+  /* Unmute/mute toggle — large, centered, orange. No background, just the icon.
+     Only visible once the video has started playing (parent gets .is-playing).
+     Auto-fades after a few seconds; returns on hover for re-muting. */
   .video-unmute {
     position: absolute;
-    bottom: 14px;
-    right: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 5;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(0, 0, 0, 0.55);
-    color: #fff;
+    width: 96px;
+    height: 96px;
+    border: none;
+    background: transparent;
+    color: var(--accent);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
     padding: 0;
+    /* Hidden by default — shown by .is-playing on parent */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s;
+    /* Subtle drop shadow so the orange icon stays visible on bright video frames */
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
   }
-  .video-unmute:hover {
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.7);
-    transform: scale(1.05);
+  .video-unmute svg { width: 100%; height: 100%; display: block; }
+  /* Visible whenever the video is playing — appears, then fades after 3.5s */
+  .project-video.is-playing .video-unmute {
+    opacity: 1;
+    pointer-events: auto;
+    animation: unmuteAutoFade 4s forwards;
   }
-  /* Icon swap: muted shown by default, unmuted hidden */
+  /* On hover over the video card, button comes back to full opacity and overrides the fade */
+  .project-video:hover .video-unmute {
+    opacity: 1;
+    pointer-events: auto;
+    animation: none;
+  }
+  /* Click feedback */
+  .video-unmute:hover { transform: translate(-50%, -50%) scale(1.1); }
+  .video-unmute:active { transform: translate(-50%, -50%) scale(0.95); }
+  /* Icon swap — muted icon shown by default, swaps when unmuted */
   .video-unmute .icon-unmuted { display: none; }
   .video-unmute.is-unmuted .icon-muted { display: none; }
   .video-unmute.is-unmuted .icon-unmuted { display: block; }
-  /* Highlight the active unmuted card's button so user knows which is playing */
-  .video-unmute.is-unmuted {
-    background: var(--accent);
-    border-color: var(--accent);
+  @keyframes unmuteAutoFade {
+    0%   { opacity: 1; }
+    70%  { opacity: 1; }
+    100% { opacity: 0; }
   }
-  /* Hide on mobile if you decide it's too cramped — opt-in only */
-  @media (max-width: 480px) {
-    .video-unmute { width: 36px; height: 36px; bottom: 10px; right: 10px; }
+  @media (max-width: 720px) {
+    .video-unmute { width: 72px; height: 72px; }
   }
   /* Placeholder gradients — still used as fallbacks while images load */
   .project-video.ph-1 { background: linear-gradient(135deg, #0a3b29 0%, #1a4d3a 100%); }
