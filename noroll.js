@@ -163,59 +163,55 @@ scene.add(cubeGroup);
 
 const cubies = [];
 
-/* Texture loader for project thumbnails. The 6 center tiles get a real
-   project image mapped to their material as soon as it loads asynchronously.
-   The texture's UVs are remapped to behave like CSS `object-fit: cover` —
-   so 16:9 thumbnails crop into the square face instead of being squeezed. */
-const textureLoader = new THREE.TextureLoader();
-textureLoader.crossOrigin = 'anonymous';
-const tileTextures = []; // index 0..5 = face → texture (or null)
+/* Texture loader for project thumbnails. To get true "object-fit: cover"
+   behavior on the square cube face, we don't use Three.js UV manipulation
+   (which can be unreliable depending on geometry UV layout). Instead, when
+   each thumbnail loads, we draw it into a SQUARE canvas — center-cropping
+   it manually — and use the resulting canvas as a CanvasTexture. This is
+   bulletproof: no stretching, no UV math, the source is already square. */
+const tileTextures = []; // index 0..5 = face → THREE.CanvasTexture (or null)
 
-// Map a texture's UV so its center fills a square face without distortion.
-// For a 16:9 image into a 1:1 face: repeat.x = 9/16, offset.x = (1-9/16)/2.
-function applyCoverUV(tex, srcAspect, dstAspect) {
-  // srcAspect = image w/h (16:9 → 1.777); dstAspect = face w/h (1 for square)
-  const ratio = srcAspect / dstAspect;
-  if (ratio > 1) {
-    // image wider than face — sample horizontal middle
-    tex.repeat.set(1 / ratio, 1);
-    tex.offset.set((1 - 1/ratio) / 2, 0);
-  } else if (ratio < 1) {
-    // image taller than face — sample vertical middle
-    tex.repeat.set(1, ratio);
-    tex.offset.set(0, (1 - ratio) / 2);
-  }
+function loadCenterCroppedTexture(url, onReady) {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    // Draw the image center-cropped into a square canvas.
+    // Use a reasonably high resolution to avoid blurriness on close zoom.
+    const SIZE = 512;
+    const canvas = document.createElement('canvas');
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+    const ctx = canvas.getContext('2d');
+    // Compute the largest square that fits centered in the source image
+    const srcSide = Math.min(img.width, img.height);
+    const sx = (img.width  - srcSide) / 2;
+    const sy = (img.height - srcSide) / 2;
+    ctx.drawImage(img, sx, sy, srcSide, srcSide, 0, 0, SIZE, SIZE);
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.needsUpdate = true;
+    onReady(tex);
+  };
+  img.onerror = () => { /* leave tile as plain color */ };
+  img.src = url;
 }
 
 for (let f = 0; f < 6; f++) {
-  textureLoader.load(
-    PROJECT_DATA[f].thumb,
-    (tex) => {
-      tex.colorSpace = THREE.SRGBColorSpace;
-      // Assume thumbnails are 16:9 (the 6 AVIF files match). If a thumbnail
-      // is actually a different aspect, applyCoverUV still does the right thing
-      // because we use the loaded image's true dimensions:
-      const srcAspect = (tex.image?.width && tex.image?.height)
-        ? tex.image.width / tex.image.height
-        : 16 / 9;
-      applyCoverUV(tex, srcAspect, 1); // 1 = square face
-      tileTextures[f] = tex;
-      // Push the texture into any materials already created for this face's center tile.
-      const tileId = `${f}-1-1`;
-      cubies.forEach(cubie => {
-        if (!Array.isArray(cubie.material)) return;
-        cubie.material.forEach(mat => {
-          if (mat.userData?.tile?.id === tileId) {
-            mat.map = tex;
-            if (mat.color) mat.color.set(0xffffff);
-            mat.needsUpdate = true;
-          }
-        });
+  loadCenterCroppedTexture(PROJECT_DATA[f].thumb, (tex) => {
+    tileTextures[f] = tex;
+    // Push the texture into any materials already created for this face's center tile.
+    const tileId = `${f}-1-1`;
+    cubies.forEach(cubie => {
+      if (!Array.isArray(cubie.material)) return;
+      cubie.material.forEach(mat => {
+        if (mat.userData?.tile?.id === tileId) {
+          mat.map = tex;
+          if (mat.color) mat.color.set(0xffffff);
+          mat.needsUpdate = true;
+        }
       });
-    },
-    undefined,
-    () => { /* load fail — leave tile as plain color */ }
-  );
+    });
+  });
 }
 
 function tileMaterial(tile) {
