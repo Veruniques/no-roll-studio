@@ -804,15 +804,18 @@
     display: block;
     border: 0;
   }
-  /* Legal disclaimer for the whole portfolio — sits below all 6 projects */
+  /* Legal disclaimer for the whole portfolio — sits below all 6 projects.
+     Uses the same 1400px centered container + 40px padding as .project so
+     its left edge lines up exactly with the video frames above it. */
   .portfolio-disclaimer {
     font-family: 'Inter Tight', sans-serif;
     font-size: 12px;
     line-height: 1.5;
     color: var(--ink-soft);
+    max-width: 1400px;
     margin: 50px auto 0;
-    max-width: 70ch;
-    text-align: center;
+    padding: 0 40px;
+    text-align: left;
   }
 
   /* ====== Section: Contact — Pitch in a frame ====== */
