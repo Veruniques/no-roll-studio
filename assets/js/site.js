@@ -34,7 +34,7 @@
   function home() {
     setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'kiwi-bundles-desktop', 'kbc-dashboard', 'kiwi-bundles-seatmap'].map(n => `assets/img/work/${n}.jpg`));
     view.innerHTML = `<section class="hero"><h1>Product Designer. <span>Monetization and complex flows.</span></h1>
-      <p class="lead">I co-led Ancillaries at Kiwi.com, with one goal: take revenue per booking <b>from €2 to €25</b>. I also built product research from zero at Keboola. Former brand lead and co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
+      <p class="lead">I co-led Ancillaries at Kiwi.com, with one goal: take revenue per booking <b>from €2 to €25</b>. I also built product research from zero at Keboola. Former co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
       <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
       <a class="now" href="#kiwi" aria-label="Kiwi.com showreel"><span>Now playing</span><video src="assets/video/kiwi-showreel.mp4" poster="assets/img/work/kiwi-reel-poster.jpg" muted loop playsinline ${reduce ? '' : 'autoplay'}></video></a></section>
       <p class="path">${esc(A.path)}</p>${works()}

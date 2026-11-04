@@ -1309,9 +1309,9 @@ window.NOROLL = {
       { when: 'Jul – Aug 2024', what: 'Career break: teaching first aid & mountaineering', where: 'Nepal' },
       { when: 'Jun 2022 – May 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com, remote', text: 'Co-led the domain with product and engineering leads. Led a team of 3 direct and 2 indirect reports, owned initiatives tied to OKRs and company strategy, and hired new designers.', link: 'kiwi' },
       { when: 'Mar 2021 – Oct 2022', what: 'Product Design Lead', where: 'Keboola', text: 'Built data-driven product development where there was no research, tracking or data collection. Launched pay-as-you-go onboarding for B2C users, while keeping the product easy to use for data engineers.', link: 'keboola' },
-      { when: 'Feb 2020 – Apr 2021', what: 'Designer, Web & Brand', where: 'Keboola, freelance', text: 'Product website, built in Webflow, and brand design.' },
+      { when: 'Feb 2020 – Apr 2021', what: 'Product Designer', where: 'Keboola, freelance', text: 'Product website, built in Webflow, and brand design.' },
       { when: 'Feb 2019 – Mar 2020', what: 'Senior Product Designer', where: 'SinnerSchrader, Frankfurt / Prague', text: 'Global design system for a pharmacy company with markets in Europe, South America and Asia, working directly with the client and with design teams across time zones.' },
-      { when: 'Feb 2018 – Jan 2019', what: 'Brand Lead', where: 'CloseIT, Brno', text: 'Defined the visual language and templates, and led the website, visuals and social media. Also worked on global brand awareness strategy and a credit risk management system for banks.' },
+      { when: 'Feb 2018 – Jan 2019', what: 'Product Design', where: 'CloseIT, Brno', text: 'Web design and development lead. Product development of a Credit Risk Management System, a digital product for the banking sector.' },
       { when: 'Oct 2016 – Dec 2018', what: 'Co-Founder', where: 'Naash.co, France', text: 'Launched an app and website matching flatmates and landlords. Business strategy, fundraising and expansion.' },
     ],
     references: [
