@@ -43,6 +43,7 @@
       <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
       <a class="now" href="#kiwi" aria-label="Kiwi.com showreel"><span>Now playing</span><video src="assets/video/kiwi-showreel.mp4" poster="assets/img/work/kiwi-reel-poster.jpg" muted loop playsinline ${reduce ? '' : 'autoplay'}></video></a></section>
       <p class="path">${esc(A.path)}</p>${works()}
+      <section class="section" id="agents"><p class="eyebrow">Agentic workflows</p><h2 class="h2">How I work with agents</h2><ul class="ul">${A.agents.map(i => `<li>${esc(i)}</li>`).join('')}</ul></section>
       <section class="section" id="career"><p class="eyebrow">Since 2016</p><h2 class="h2">CV</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Full CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></section>
       <p class="path" style="margin-top:48px"><a href="#${films[0].id}">AI campaigns for cinema and TV ›</a> <span class="muted">The side passion.</span></p>`;
   }
@@ -76,6 +77,7 @@
     view.innerHTML = `<section class="case"><h1>About</h1>
       <p class="prose">${A.intro.map(esc).join('</p><p class="prose">')}</p><p class="prose">${esc(A.path)}</p>
       <div class="tags">${A.canDo.map(c => `<span>${esc(c)}</span>`).join('')}</div>
+      <div class="ch"><h2>How I work with agents</h2><ul class="ul">${A.agents.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>
       <div class="ch"><h2>On stage</h2><ul class="ul">${talks()}</ul></div>
       <div class="ch"><h2>CV</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Plain-text CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></div>
       <div class="ch"><h2>What people say</h2>${A.references.map(r => `<blockquote class="quote">“${esc(r.text)}”<cite>${esc(r.who)}, ${esc(r.role)}${r.letter ? ` · <a href="${r.letter}" target="_blank" rel="noopener">Read the full letter (PDF)</a>` : ''}</cite></blockquote>`).join('')}</div>

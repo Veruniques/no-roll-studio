@@ -1315,6 +1315,12 @@ window.NOROLL = {
       'I was raised in a business environment and later ran my own company, so product development, agile, client calls and leading teams aren’t things I read about. They’re things I’ve survived.',
       'In the field since 2016. Still curious. Slightly less patient.',
     ],
+    agents: [
+      'Prototypes and sites I ship myself, with Claude Code and GitHub. This portfolio is plain HTML, CSS and JS, written and deployed that way.',
+      'Agents connected to Figma through MCP, so they work from the real files and not from my description of them.',
+      'Automation, scripts and connectors for the repetitive parts of daily project work.',
+      'Agents draft and check. I decide what’s true and what ships.',
+    ],
     canDo: [
       'Product design (UX, UI)',
       'Monetization & complex flows',
@@ -1353,13 +1359,13 @@ window.NOROLL = {
         letter: 'assets/docs/reference-michal-sindelar.pdf',
       },
     ],
-    path: 'After two years leading a revenue-critical domain at Kiwi.com, I designed the PFLB load-testing platform and art-directed campaigns for cinema and TV. A different medium kept my craft sharp and changed how fast I work. Now I’m focusing on product again, full-time. AI in audiovisual stays as the hobby I speak about.',
+    path: 'After two years leading a revenue-critical domain at Kiwi.com, I designed the PFLB load-testing platform and art-directed campaigns for cinema and TV. A different medium kept my craft sharp and changed how fast I work. Now I’m focusing on product again, full-time.',
     talks: [
       { what: 'Speaker, Hack Your Way 2026, Brno: when AI video is an ace up your sleeve, and when you pay extra for the illusion of savings', url: 'https://www.hackyourway.cz/program/veronika-dominikova' },
     ],
     fameplay: 'I joined the team awarded the first Emmy Award in Czech history for the original series #marty_is_dead. I produce and create AI cinematic videos combining storytelling, art direction and advanced AI workflows, focused on visuals that elevate products, services and ideas beyond standard AI content.',
     tools: [
-      'Figma', 'Webflow', 'GitHub', 'Claude MCP', 'Photoshop',
+      'Figma', 'Webflow', 'GitHub', 'Claude Code', 'Claude MCP', 'Photoshop',
       'ComfyUI', 'Weavy', 'Magnific', 'Higgsfield', 'Midjourney', 'LoRA', 'Topaz',
       'DaVinci Resolve', 'ElevenLabs',
     ],

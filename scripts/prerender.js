@@ -26,6 +26,7 @@ const html = [
   p(A.path),
   `<p><a href="mailto:${D.owner.email}">${esc(D.owner.email)}</a> · <a href="${D.owner.linkedin}">LinkedIn</a> · <a href="resume.html">Full CV</a></p>`,
   h(2, 'Case studies'), ...main.map(caseStudy),
+  h(2, 'How I work with agents'), ul(A.agents),
   h(2, 'CV'), ...A.cv.map(r => `<h3>${esc(r.what)}</h3>${p(`${r.where} · ${r.when}`)}${p(r.text)}`),
   h(2, 'Other work'), ...more.map(caseStudy),
   h(2, 'What people say'), ...A.references.map(r => `<blockquote>${esc(r.text)} — ${esc(r.who)}, ${esc(r.role)}${r.letter ? ` <a href="${r.letter}">Full letter (PDF)</a>` : ''}</blockquote>`),
