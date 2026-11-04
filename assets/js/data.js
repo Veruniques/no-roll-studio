@@ -1304,15 +1304,15 @@ window.NOROLL = {
       'Creative direction',
     ],
     cv: [
-      { when: 'Mar 2026 – now', what: 'Founder', where: 'NO ROLL studio' },
-      { when: 'Oct 2024 – Mar 2026', what: 'AI Art Lead', where: 'Fameplay, Prague' },
+      { when: 'Mar 2026 – now', what: 'Founder', where: 'NO ROLL studio', text: 'Websites, digital products and AI-driven campaigns.' },
+      { when: 'Oct 2024 – Mar 2026', what: 'AI Art Lead', where: 'Fameplay, Prague', text: 'AI cinematic videos combining storytelling, art direction and advanced AI workflows, with the team behind #marty_is_dead, the first Emmy Award in Czech history.' },
       { when: 'Jul – Aug 2024', what: 'Career break: teaching first aid & mountaineering', where: 'Nepal' },
-      { when: 'Jun 2022 – May 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com' },
-      { when: 'Mar 2021 – Oct 2022', what: 'Product Design Lead', where: 'Keboola' },
-      { when: 'Feb 2020 – Apr 2021', what: 'Designer, Web & Brand', where: 'Keboola' },
-      { when: 'Feb 2019 – Mar 2020', what: 'Senior Product Designer', where: 'SinnerSchrader, Frankfurt / Prague' },
-      { when: 'Feb 2018 – Jan 2019', what: 'CMO', where: 'CloseIT, Brno' },
-      { when: 'Oct 2016 – Dec 2018', what: 'Co-Founder', where: 'Naash, France' },
+      { when: 'Jun 2022 – May 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com, remote', text: 'Co-led the domain with product and engineering leads. Led a team of 3 direct and 2 indirect reports, owned initiatives tied to OKRs and company strategy, and hired new designers.', link: 'kiwi' },
+      { when: 'Mar 2021 – Oct 2022', what: 'Product Design Lead', where: 'Keboola', text: 'Built data-driven product development where there was no research, tracking or data collection. Launched pay-as-you-go onboarding for B2C users, while keeping the product easy to use for data engineers.', link: 'keboola' },
+      { when: 'Feb 2020 – Apr 2021', what: 'Designer, Web & Brand', where: 'Keboola, freelance', text: 'Product website, built in Webflow, and brand design.' },
+      { when: 'Feb 2019 – Mar 2020', what: 'Senior Product Designer', where: 'SinnerSchrader, Frankfurt / Prague', text: 'Global design system for a pharmacy company with markets in Europe, South America and Asia, working directly with the client and with design teams across time zones.' },
+      { when: 'Feb 2018 – Jan 2019', what: 'Brand Lead', where: 'CloseIT, Brno', text: 'Led website design and development and global brand awareness strategy, and worked on product development of a credit risk management system for banks.' },
+      { when: 'Oct 2016 – Dec 2018', what: 'Co-Founder', where: 'Naash.co, France', text: 'Launched an app and website matching flatmates and landlords. Business strategy, fundraising and expansion.' },
     ],
     references: [
       {

@@ -25,6 +25,7 @@
   requestAnimationFrame(tick);
 
   const rows = list => `<div class="list">${list.map(p => `<a class="row" href="#${p.id}"><img data-thumb="${p.id}" src="${thumb(p)}" alt="" loading="lazy"><span><b>${esc(p.title)}</b><small>${esc(p.subtitle)}</small></span><em>${p.reel ? 'Showreel' : p.vimeo ? 'Film' : 'Case study'}</em></a>`).join('')}</div>`;
+  const career = () => `<div class="career">${A.cv.map(r => `<div class="cvr"><span>${esc(r.when)}</span><div><b>${esc(r.what)}</b><small>${esc(r.where)}</small>${r.text ? `<p>${esc(r.text)}</p>` : ''}${r.link ? `<a href="#${r.link}">See the case study ›</a>` : ''}</div></div>`).join('')}</div>`;
   const talks = () => A.talks.map(t => `<li>${t.url ? `<a href="${t.url}" target="_blank" rel="noopener">${esc(t.what)}</a>` : esc(t.what)}</li>`).join('');
   const works = () => `<section class="section" id="work"><div class="count">${String(main.length).padStart(2, '0')} <i>case studies</i></div>${rows(main)}</section>
     <section class="section"><p class="eyebrow">Since 2024</p><h2 class="h2">More recent work</h2>${rows(more)}</section>
@@ -33,10 +34,11 @@
   function home() {
     setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'kiwi-bundles-desktop', 'kbc-dashboard', 'kiwi-bundles-seatmap'].map(n => `assets/img/work/${n}.jpg`));
     view.innerHTML = `<section class="hero"><h1>Product Designer. <span>Monetization and complex flows.</span></h1>
-      <p class="lead">I co-led Ancillaries at Kiwi.com, with one goal: take revenue per booking <b>from €2 to €25</b>. I also built product research from zero at Keboola. Former CMO and co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
+      <p class="lead">I co-led Ancillaries at Kiwi.com, with one goal: take revenue per booking <b>from €2 to €25</b>. I also built product research from zero at Keboola. Former brand lead and co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
       <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
       <a class="now" href="#kiwi" aria-label="Kiwi.com showreel"><span>Now playing</span><video src="assets/video/kiwi-showreel.mp4" poster="assets/img/work/kiwi-reel-poster.jpg" muted loop playsinline ${reduce ? '' : 'autoplay'}></video></a></section>
-      <p class="path">${esc(A.path)}</p>${works()}`;
+      <p class="path">${esc(A.path)}</p>${works()}
+      <section class="section" id="career"><p class="eyebrow">Since 2016</p><h2 class="h2">Career</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Full CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></section>`;
   }
 
   /* a page for one reader */
@@ -69,7 +71,7 @@
       <p class="prose">${A.intro.map(esc).join('</p><p class="prose">')}</p><p class="prose">${esc(A.path)}</p>
       <div class="tags">${A.canDo.map(c => `<span>${esc(c)}</span>`).join('')}</div>
       <div class="ch"><h2>On stage</h2><ul class="ul">${talks()}</ul></div>
-      <div class="ch"><h2>CV</h2><div style="margin-top:14px">${A.cv.map(r => `<div class="cvr"><span>${esc(r.when)}</span><div>${esc(r.what)}<small>${esc(r.where)}</small></div></div>`).join('')}</div><div class="cta"><a class="btn btn--g" href="resume.html">Plain-text CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></div>
+      <div class="ch"><h2>CV</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Plain-text CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></div>
       <div class="ch"><h2>What people say</h2>${A.references.map(r => `<blockquote class="quote">“${esc(r.text)}”<cite>${esc(r.who)}, ${esc(r.role)}</cite></blockquote>`).join('')}</div>
       <div class="ch"><h2>Tools</h2><div class="tags">${A.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div></div></section>`;
   }
@@ -107,12 +109,12 @@
     window.__spy = null;
     const h = decodeURIComponent(location.hash.slice(1)), r = (D.redirects && D.redirects[h]) || h, [id, ch] = r.split('/');
     const p = all.find(x => x.id === id);
-    const scrollTop = id !== 'work';
+    const scrollTop = id !== 'work' && id !== 'career';
     if (p) kase(p, ch); else if (id === 'about') about(); else if (FOR[id]) forReader(id); else home();
     strip.classList.add('on');
     view.style.animation = 'none'; void view.offsetWidth; view.style.animation = '';
     $$('.top nav a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
-    if (id === 'work') setTimeout(() => $('#work')?.scrollIntoView(), 30); else if (scrollTop && !ch) scrollTo({ top: 0, behavior: 'auto' });
+    if (id === 'work' || id === 'career') setTimeout(() => $('#' + id)?.scrollIntoView(), 30); else if (scrollTop && !ch) scrollTo({ top: 0, behavior: 'auto' });
     document.title = (p ? p.title + ' — ' : FOR[id] ? 'For ' + id[0].toUpperCase() + id.slice(1) + ' — ' : '') + 'Veronika Dominiková, Product Designer';
   }
   addEventListener('hashchange', route);
