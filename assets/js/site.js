@@ -30,7 +30,7 @@
 
   function home() {
     setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'extit-hero', 'kiwi-bundles-desktop', 'kbc-dashboard', 'clash-hero', 'x-fameplay-humanoid'].map(n => `assets/img/work/${n}.jpg`));
-    view.innerHTML = `<section class="hero"><h1>Lead Product Designer. <span>Monetization and complex flows.</span></h1>
+    view.innerHTML = `<section class="hero"><h1>Product Designer. <span>Monetization and complex flows.</span></h1>
       <p class="lead">I co-led Ancillaries at Kiwi.com, with one goal: take revenue per booking <b>from €2 to €25</b>. I also built product research from zero at Keboola. Former CMO and co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
       <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
       <a class="now" href="#kiwi" aria-label="Kiwi.com showreel"><span>Now playing</span><video src="assets/video/kiwi-showreel.mp4" poster="assets/img/work/kiwi-reel-poster.jpg" muted loop playsinline ${reduce ? '' : 'autoplay'}></video></a></section>
@@ -45,8 +45,9 @@
       why: [
         ['Discovery to delivery, on all three platforms', 'Fare Families at Kiwi.com: from the first sketch to handoff on web, iOS and Android, including refunds and the customer-service tool.', 'See Fare Families', 'kiwi/fare-families'],
         ['Decisions I can defend', 'One feature, from the ticket and benchmark to design critique and what we took forward.', 'Read the decision story', 'kiwi/decision'],
-        ['Details that earn money', 'Co-led Ancillaries at Kiwi.com, with a goal of €2 to €25 per booking and double the overall revenue. When an upsell appears, and when it should stay quiet.', 'See Bundles', 'kiwi/bundles'],
-        ['Research and data, built from zero', 'At Keboola I set up user research, data tracking and the product process, then took a data engineers’ platform to pay-as-you-go users.', 'See Keboola', 'keboola'],
+        ['Details that earn money', 'Co-led Ancillaries at Kiwi.com, with a goal of €2 to €25 per booking and double the overall revenue. We A/B tested variants and kept what performed, using revenue, CX feedback, UX research and quantitative data.', 'See Bundles', 'kiwi/bundles'],
+        ['Tested before building, reviewed after release', 'At Keboola I led interviews on prototypes before development, then post-release interviews and funnel reviews to see where users dropped off.', 'See how I test', 'keboola/testing'],
+        ['Design systems, more than once', 'Design systems for product and website at Keboola, a shared component set for web, apps and email at Kiwi.com, and a global design system at SinnerSchrader.', 'See the components', 'kiwi/post-booking'],
         ['Clean craft, beyond the product', 'Typography, grids and visual systems, from a whole studio identity to the websites I still design. I also prototype in code. This site is one.', 'See Fameplay', 'fameplay'],
       ],
     },
@@ -110,7 +111,7 @@
     view.style.animation = 'none'; void view.offsetWidth; view.style.animation = '';
     $$('.top nav a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
     if (id === 'work') setTimeout(() => $('#work')?.scrollIntoView(), 30); else if (scrollTop && !ch) scrollTo({ top: 0, behavior: 'auto' });
-    document.title = (p ? p.title + ' — ' : FOR[id] ? 'For ' + id[0].toUpperCase() + id.slice(1) + ' — ' : '') + 'Veronika Dominiková, Lead Product Designer';
+    document.title = (p ? p.title + ' — ' : FOR[id] ? 'For ' + id[0].toUpperCase() + id.slice(1) + ' — ' : '') + 'Veronika Dominiková, Product Designer';
   }
   addEventListener('hashchange', route);
 

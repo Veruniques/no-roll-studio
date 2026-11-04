@@ -159,6 +159,7 @@ window.NOROLL = {
       "problem": "Ancillaries are everything you buy on top of a flight. Bags, seats, AXA insurance, Kiwi.com Guarantee, Price Lock, fare types, service packages, bundles, Booking.com and Rentalcars. Each had its own team and its own idea of where to upsell. The business needed more revenue from it, the company was reorganising ownership mid-flight, and nobody had the full picture.",
       "text": "I took over the design team mid-reorg and co-led the domain with product and engineering. Everything below came out of design jams I ran with designers, PMs, engineers and, regularly, C-level. And a lot of it I designed with my own hands.",
       "decisions": [
+        "Decisions kept changing with the evidence: we A/B tested variants and kept what performed, using revenue, CX feedback, UX research and quantitative data",
         "One upsell moment per product per stage, triggered by context (first MMB visit, before check-in when bags or seats are still available, after a schedule change), not by banner real estate",
         "Business rules live in the design, not in a spreadsheet next to it: Price Lock only shows when the fare margin clears a threshold, different for B2C and B2B2C",
         "Friction designed on purpose: the “are you sure” moments were mapped and made consistent instead of each team inventing its own"
@@ -172,6 +173,8 @@ window.NOROLL = {
         "Led 3 product designers, a content designer and a UX researcher",
         "Facilitated design jams and working sessions with PMs, engineering and C-level",
         "Hands-on on the key flows, with a strong focus on visual design",
+        "Briefed the team’s UX researcher on what to test, then used the findings to make further feature decisions",
+        "Worked directly with a quantitative researcher and planned further development around the data",
         "Hiring, feedback and growth of the team"
       ],
       "chapters": [
@@ -509,11 +512,13 @@ window.NOROLL = {
       "role": [
         "Built data-driven product development from scratch",
         "Set up the user research program",
+        "Worked directly on the design systems for both the product and the website",
         "Championed UX against technical constraints",
         "Owned the website (Webflow), illustration system and launch campaigns"
       ],
       "chapters": [
-        {"id": "flows", "title": "Flow Builder", "kicker": "Data pipelines, block by block", "text": "Building a data pipeline as a visual flow: tasks grouped into phases, new configurations created in place, and a jobs view for what actually ran.", "images": [{"src": "assets/img/work/kbc-flow-builder.jpg", "w": 1436, "h": 1550, "alt": "Keboola Flow Builder with a pipeline of grouped tasks", "size": "half"}, {"src": "assets/img/work/kbc-flow-config.jpg", "w": 1436, "h": 1150, "alt": "Creating a new configuration inside a flow", "size": "half"}, {"src": "assets/img/work/kbc-jobs.jpg", "w": 1436, "h": 1240, "alt": "Jobs overview with status per component", "size": "half"}, {"src": "assets/img/work/kbc-dashboard.jpg", "w": 1436, "h": 1795, "alt": "Project dashboard overview", "size": "half"}]},
+        {"id": "testing", "title": "Testing and funnels", "kicker": "Before development, and after release", "highlight": true, "teaser": "How I test: interviews on prototypes before development, then post-release interviews and funnel reviews.", "text": "I led research interviews on prototypes. We tested features before development and tuned them before handoff to engineering. After release, I led follow-up interviews, collected the data and went through user funnels to see where people dropped off."},
+        {"id": "flows", "title": "Flow Builder", "kicker": "Data pipelines, block by block", "text": "Flow Builder let non-technical stakeholders build a data pipeline themselves: drag and drop and a visual system, instead of SQL and a Windows 95 look. Tasks grouped into phases, new configurations created in place, and a jobs view for what actually ran.", "images": [{"src": "assets/img/work/kbc-flow-builder.jpg", "w": 1436, "h": 1550, "alt": "Keboola Flow Builder with a pipeline of grouped tasks", "size": "half"}, {"src": "assets/img/work/kbc-flow-config.jpg", "w": 1436, "h": 1150, "alt": "Creating a new configuration inside a flow", "size": "half"}, {"src": "assets/img/work/kbc-jobs.jpg", "w": 1436, "h": 1240, "alt": "Jobs overview with status per component", "size": "half"}, {"src": "assets/img/work/kbc-dashboard.jpg", "w": 1436, "h": 1795, "alt": "Project dashboard overview", "size": "half"}]},
         {
           "id": "ui",
           "title": "Product UI 2.0",
