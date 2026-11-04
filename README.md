@@ -13,6 +13,8 @@ Everything lives in `assets/js/data.js`:
 - `product` — case studies: hero, overview, `chapters[]` with galleries (`size`: full|half|third, `full` = full-length page for the lightbox). Images in `assets/img/work/`.
 - `about` — intro, CV, tools
 
+After editing `data.js`, run `node scripts/prerender.js`. It copies the text into `index.html` so tools that don't run JavaScript can read it.
+
 Images go in `assets/img/`. Keep them under ~400 KB (JPG, max 1600 px wide).
 
 ## Run locally
