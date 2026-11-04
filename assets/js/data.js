@@ -1307,6 +1307,7 @@ window.NOROLL = {
       { when: 'Mar 2026 – now', what: 'Creative Director / Founder', where: 'NO ROLL studio', text: 'Websites, digital products and AI-driven campaigns.' },
       { when: 'Oct 2024 – Mar 2026', what: 'Creative Art Director', where: 'Fameplay, Prague', text: 'AI cinematic videos combining storytelling, art direction and advanced AI workflows, with the team behind #marty_is_dead, the first Emmy Award in Czech history.' },
       { when: 'Jul – Aug 2024', what: 'Career break: teaching first aid & mountaineering', where: 'Nepal' },
+      { when: 'Mar 2024 – Jun 2025', what: 'Associate Product Designer', where: 'PFLB', text: 'Product design for boomq, and the PFLB website.' },
       { when: 'Jun 2022 – May 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com, remote', text: 'Co-led the domain with product and engineering leads. Led a team of 3 direct and 2 indirect reports, owned initiatives tied to OKRs and company strategy, and hired new designers.', link: 'kiwi' },
       { when: 'Mar 2021 – Oct 2022', what: 'Product Design Lead', where: 'Keboola', text: 'Built data-driven product development where there was no research, tracking or data collection. Launched pay-as-you-go onboarding for B2C users, while keeping the product easy to use for data engineers.', link: 'keboola' },
       { when: 'Feb 2020 – Apr 2021', what: 'Product Designer', where: 'Keboola, freelance', text: 'Product design of the SaaS product under an art director. Website design and development in Webflow.' },
@@ -1328,7 +1329,7 @@ window.NOROLL = {
         letter: 'assets/docs/reference-michal-sindelar.pdf',
       },
     ],
-    path: 'After two years leading a revenue-critical domain at Kiwi.com, I stepped away from product design on purpose and spent the time going deep on AI, as Creative Art Director on AI campaigns for cinema and TV. It kept me making things, kept my creative side sharp, and changed how fast I work. Now I’m bringing that back to product. AI in audiovisual stays as the hobby I speak about.',
+    path: 'After two years leading a revenue-critical domain at Kiwi.com, I stepped away from full-time product leadership on purpose and went deep on AI, as Creative Art Director on AI campaigns for cinema and TV, while still doing product design for PFLB until mid-2025. It kept me making things, kept my creative side sharp, and changed how fast I work. Now I’m bringing that back to product. AI in audiovisual stays as the hobby I speak about.',
     talks: [
       { what: 'Speaker, Hack Your Way 2026, Brno: when AI video is an ace up your sleeve, and when you pay extra for the illusion of savings', url: 'https://www.hackyourway.cz/program/veronika-dominikova' },
     ],
