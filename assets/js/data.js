@@ -947,216 +947,215 @@ window.NOROLL = {
     {"more": true, "id": "clash", "title": "Clash of Candles", "subtitle": "Web identity · 2026", "type": "Brand & web > Web identity", "client": "Clash of Candles", "cover": "assets/img/work/cover-clash.jpg", "hero": "assets/img/work/clash-hero.jpg", "heroAlt": "Clash of Candles homepage hero", "link": "https://www.clashofcandles.cz/en/", "text": "We’re building a skill-based game. The game itself stays under wraps for now, so here’s the part that’s already public: the web identity, from the fighting candles to the pre-launch site.", "chapters": [{"id": "web", "title": "Web identity", "kicker": "Pre-launch site", "images": [{"src": "assets/img/work/clash-cta.jpg", "w": 1440, "h": 733, "alt": "Clash of Candles early-access section", "size": "full"}, {"src": "assets/img/work/clash-mobile.jpg", "w": 1710, "h": 904, "alt": "Clash of Candles on mobile", "size": "full"}]}]},
     {"id": "fameplay", "more": true, "title": "Fameplay", "subtitle": "Metal liquid visual + website", "type": "Visual design & web", "client": "Fameplay", "cover": "assets/img/work/cover-fameplay.jpg", "hero": "assets/img/work/x-fameplay-chrome-logo.jpg", "heroAlt": "Fameplay logo in liquid metal", "text": "The metal liquid visual and the website for an AI studio. The website is no longer live, so the visual is what’s left to show.", "chapters": [{"id": "visual", "title": "Metal liquid", "kicker": "Key visual", "images": [{"src": "assets/img/work/x-fameplay-chrome-logo2.jpg", "w": 1600, "h": 826, "alt": "Fameplay wordmark in liquid metal", "size": "full"}, {"src": "assets/img/work/x-fameplay-humanoid.jpg", "w": 1525, "h": 1450, "alt": "Liquid metal humanoid", "size": "half"}]}]},
     {
-      "id": "pflb", "draft": true,
-      "title": "PFLB",
-      "subtitle": "Website + load-testing platform",
-      "type": "Web & Product Design > B2B SaaS, developer tool",
-      "client": "PFLB (boomq.io)",
-      "cover": "assets/img/work/cover-pflb.jpg",
-      "hero": "assets/img/work/pflb-hero.jpg",
-      "heroAlt": "PFLB website: homepage, pricing and features pages",
-      "facts": [
-        [
-          "18",
-          "page templates in the website"
-        ],
-        [
-          "1",
-          "visual system for site and product"
-        ],
-        [
-          "2",
-          "products: the platform and the services"
-        ]
-      ],
-      "problem": "PFLB sells two things at once: a self-service load-testing platform and expert performance-testing services. The old site sold neither well. Developers want docs, pricing and a free trial; enterprise buyers want proof, process and a person to talk to.",
-      "text": "I designed the new PFLB website end to end: information architecture, page templates and the visual system, plus the product UI of the platform behind it.",
-      "chapters": [
+  "id": "pflb",
+  "title": "PFLB",
+  "subtitle": "Senior Product Designer · Load-testing platform and UI kit · 2024–2025",
+  "type": "Product design > B2B SaaS, developer tool",
+  "client": "PFLB (boomq)",
+  "production": "Contract, remote",
+  "cover": "assets/img/work/cover-pflb.jpg",
+  "hero": "assets/img/work/pflbp-wel-1.jpg",
+  "heroAlt": "PFLB platform welcome screen with three ways to start a load test",
+  "link": "https://pflb.us/",
+  "facts": [
+    [
+      "3",
+      "ways to start a test: from scratch, from imported requests, or from JMeter"
+    ],
+    [
+      "14",
+      "months on contract, working mainly on the product"
+    ]
+  ],
+  "problem": "PFLB is a cloud platform for checking how a website or app handles load before go-live. A test can start from a low-code editor, imported requests or an existing JMeter script, and then needs a load profile, SLAs, a run and a report someone can read.",
+  "text": "My co-lead from Kiwi.com was working on the project and brought me into the team. I worked mainly on the platform and the UI kit, and built prototypes. The website was a small part of the job.",
+  "role": [
+    "Product design across the platform, with screens that went into production",
+    "Work on the PFLB UI kit and visual experiments",
+    "Prototypes of new flows and iterations",
+    "A smaller part of the work on the PFLB website"
+  ],
+  "chapters": [
+    {
+      "id": "test",
+      "title": "Creating a test",
+      "kicker": "Explorations and iterations",
+      "text": "Load profile, use cases and allocation groups, with a live chart of the load shape next to its settings.",
+      "images": [
         {
-          "id": "web",
-          "title": "Website",
-          "kicker": "Platform, services, insights",
-          "text": "Two journeys on one site. Platform: features, pricing, enterprise, docs, tutorials, releases, sign-up. Services: why PFLB, how we work, service and challenge templates, case studies. Insights: blog and articles. Click any page to see it in full.",
-          "images": [
-            {
-              "src": "assets/img/work/pflb-home.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Homepage",
-              "size": "third",
-              "full": "assets/img/work/pflb-home-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-platform.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Platform",
-              "size": "third",
-              "full": "assets/img/work/pflb-platform-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-solutions.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Solutions",
-              "size": "third",
-              "full": "assets/img/work/pflb-solutions-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-pricing.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Pricing",
-              "size": "third",
-              "full": "assets/img/work/pflb-pricing-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-features.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Features",
-              "size": "third",
-              "full": "assets/img/work/pflb-features-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-why.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Why PFLB",
-              "size": "third",
-              "full": "assets/img/work/pflb-why-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-enterprise.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Enterprise",
-              "size": "third",
-              "full": "assets/img/work/pflb-enterprise-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-howwework.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: How we work",
-              "size": "third",
-              "full": "assets/img/work/pflb-howwework-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-service.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Service template",
-              "size": "third",
-              "full": "assets/img/work/pflb-service-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-docs.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Documentation",
-              "size": "third",
-              "full": "assets/img/work/pflb-docs-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-tutorials.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Tutorials",
-              "size": "third",
-              "full": "assets/img/work/pflb-tutorials-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-releases.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Releases",
-              "size": "third",
-              "full": "assets/img/work/pflb-releases-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-blog.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Blog",
-              "size": "third",
-              "full": "assets/img/work/pflb-blog-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-article.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Article",
-              "size": "third",
-              "full": "assets/img/work/pflb-article-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-contacts.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Contacts",
-              "size": "third",
-              "full": "assets/img/work/pflb-contacts-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-signup.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Sign up",
-              "size": "third",
-              "full": "assets/img/work/pflb-signup-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-getintouch.jpg",
-              "w": 900,
-              "h": 1125,
-              "alt": "PFLB website: Get in touch",
-              "size": "third",
-              "full": "assets/img/work/pflb-getintouch-full.jpg"
-            },
-            {
-              "src": "assets/img/work/pflb-menu.jpg",
-              "w": 900,
-              "h": 880,
-              "alt": "PFLB website: Mega menu",
-              "size": "third",
-              "full": "assets/img/work/pflb-menu-full.jpg"
-            }
-          ]
+          "src": "assets/img/work/pflbp-test.jpg",
+          "w": 900,
+          "h": 704,
+          "alt": "Test editor with load profile settings and chart",
+          "size": "half"
         },
         {
-          "id": "platform",
-          "title": "Platform (boomq)",
-          "kicker": "Load testing without JMeter scripts",
-          "text": "Test editor and thread groups, load profile, pacing, SLA, test runs, reports and trends. Every load-profile parameter updates a live chart of the load shape, so you see the load before you run it. Reports work as a list, not an archive: filters, labels, “show only mine”, duplicate and edit in place.",
-          "images": [
-            {
-              "src": "assets/img/pflb-1.jpg",
-              "w": 1139,
-              "h": 1050,
-              "alt": "Load profile editor with live load-shape preview",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/pflb-2.jpg",
-              "w": 1195,
-              "h": 1000,
-              "alt": "Reports list with filters and labels",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/pflb-3.jpg",
-              "w": 966,
-              "h": 352,
-              "alt": "Client platform flow",
-              "size": "full"
-            }
-          ]
+          "src": "assets/img/work/pflbp-case.jpg",
+          "w": 900,
+          "h": 512,
+          "alt": "Use case builder with transactions and requests",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-alloc.jpg",
+          "w": 900,
+          "h": 496,
+          "alt": "Allocation groups and use cases in a test",
+          "size": "full"
         }
-      ],
-      "x": 70,
-      "y": 46
+      ]
     },
+    {
+      "id": "jmeter",
+      "title": "Bringing your own JMeter tests",
+      "kicker": "Explorations and iterations",
+      "text": "For teams that already have scripts: upload a JMX file with its supporting files, then see the test as settings and containers.",
+      "images": [
+        {
+          "src": "assets/img/work/pflbp-jmx.jpg",
+          "w": 900,
+          "h": 589,
+          "alt": "Upload JMX files dialog",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-jmxov.jpg",
+          "w": 900,
+          "h": 576,
+          "alt": "Overview of an imported JMeter test",
+          "size": "half"
+        }
+      ]
+    },
+    {
+      "id": "sla",
+      "title": "SLAs",
+      "kicker": "Explorations and iterations",
+      "text": "SLAs across a test, its transactions and requests, with time ranges and a status for each one.",
+      "images": [
+        {
+          "src": "assets/img/work/pflbp-sla.jpg",
+          "w": 832,
+          "h": 440,
+          "alt": "Test run SLAs list with statuses",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-slaed.jpg",
+          "w": 900,
+          "h": 760,
+          "alt": "SLA editor with custom time ranges",
+          "size": "half"
+        }
+      ]
+    },
+    {
+      "id": "anomalies",
+      "title": "Anomaly detection",
+      "kicker": "In production",
+      "text": "Anomalies marked on the response time chart, with a detection switch and a sensitivity setting per test, and notification settings in the account.",
+      "images": [
+        {
+          "src": "assets/img/work/pflbp-an2.jpg",
+          "w": 1000,
+          "h": 565,
+          "alt": "Test run charts with anomalies marked on response time",
+          "size": "full"
+        },
+        {
+          "src": "assets/img/work/pflbp-an1.jpg",
+          "w": 1000,
+          "h": 565,
+          "alt": "Anomaly detection switch and sensitivity",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-an3.jpg",
+          "w": 1000,
+          "h": 750,
+          "alt": "Anomaly notification settings in the account",
+          "size": "half"
+        }
+      ]
+    },
+    {
+      "id": "orders",
+      "title": "Ordering expert work",
+      "kicker": "Prototype",
+      "text": "A dashboard with credits, trend reports and assets, and a flow for ordering test maintenance or execution from PFLB’s engineers.",
+      "images": [
+        {
+          "src": "assets/img/work/pflbp-ord1.jpg",
+          "w": 900,
+          "h": 1039,
+          "alt": "Dashboard with credits, trend reports and assets",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-ord2.jpg",
+          "w": 896,
+          "h": 1039,
+          "alt": "Place your order panel",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-ord3.jpg",
+          "w": 900,
+          "h": 512,
+          "alt": "New order with credits subtotal",
+          "size": "full"
+        }
+      ]
+    },
+    {
+      "id": "kit",
+      "title": "UI kit and visual experiments",
+      "kicker": "Explorations",
+      "text": "Experiments with navigation, test containers and workload charts, alongside the UI kit.",
+      "images": [
+        {
+          "src": "assets/img/work/pflbp-exp1.jpg",
+          "w": 1440,
+          "h": 1050,
+          "alt": "Visual experiment: test containers and workload chart by thread group",
+          "size": "half"
+        },
+        {
+          "src": "assets/img/work/pflbp-exp2.jpg",
+          "w": 1440,
+          "h": 1050,
+          "alt": "Visual experiment: merged workload chart",
+          "size": "half"
+        }
+      ]
+    },
+    {
+      "id": "web",
+      "title": "Website",
+      "kicker": "A smaller part of the job",
+      "images": [
+        {
+          "src": "assets/img/work/pflb-home.jpg",
+          "alt": "PFLB website: homepage",
+          "size": "third",
+          "full": "assets/img/work/pflb-home-full.jpg"
+        },
+        {
+          "src": "assets/img/work/pflb-platform.jpg",
+          "alt": "PFLB website: platform",
+          "size": "third",
+          "full": "assets/img/work/pflb-platform-full.jpg"
+        },
+        {
+          "src": "assets/img/work/pflb-pricing.jpg",
+          "alt": "PFLB website: pricing",
+          "size": "third",
+          "full": "assets/img/work/pflb-pricing-full.jpg"
+        }
+      ]
+    }
+  ]
+},
     {
       "id": "extras", "draft": true,
       "title": "More visual work",
@@ -1307,7 +1306,7 @@ window.NOROLL = {
       { when: 'Mar 2026 – now', what: 'Creative Director / Founder', where: 'NO ROLL studio', text: 'Websites, digital products and AI-driven campaigns.' },
       { when: 'Oct 2024 – Mar 2026', what: 'Creative Art Director', where: 'Fameplay, Prague', text: 'AI cinematic videos combining storytelling, art direction and advanced AI workflows, with the team behind #marty_is_dead, the first Emmy Award in Czech history.' },
       { when: 'Jul – Aug 2024', what: 'Career break: teaching first aid & mountaineering', where: 'Nepal' },
-      { when: 'Mar 2024 – Jun 2025', what: 'Associate Product Designer', where: 'PFLB, contract', text: 'Product design for boomq, the load-testing platform, as my main focus. Also a smaller part of the work on the PFLB website.' },
+      { when: 'May 2024 – Jun 2025', what: 'Senior Product Designer', where: 'PFLB, contract, remote', text: 'Product design for boomq, the load-testing platform, as my main focus. Also a smaller part of the work on the PFLB website.' },
       { when: 'Jun 2022 – May 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com, remote', text: 'Co-led the domain with product and engineering leads. Led a team of 3 direct and 2 indirect reports, owned initiatives tied to OKRs and company strategy, and hired new designers.', link: 'kiwi' },
       { when: 'Mar 2021 – Oct 2022', what: 'Product Design Lead', where: 'Keboola', text: 'Built data-driven product development where there was no research, tracking or data collection. Launched pay-as-you-go onboarding for B2C users, while keeping the product easy to use for data engineers.', link: 'keboola' },
       { when: 'Feb 2020 – Apr 2021', what: 'Product Designer', where: 'Keboola, freelance', text: 'Product design of the SaaS product under an art director. Website design and development in Webflow.' },
