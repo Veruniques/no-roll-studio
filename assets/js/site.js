@@ -6,6 +6,7 @@
   const view = $('#view'), track = $('#track'), strip = $('.strip');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const product = D.product.filter(p => !p.draft), films = D.cinematic;
+  const main = product.filter(p => !p.more), more = product.filter(p => p.more);
   const all = [...product, ...films];
   const vthumb = {};
   const thumb = p => p.cover || vthumb[p.vimeo] || '';
@@ -25,11 +26,12 @@
 
   const rows = list => `<div class="list">${list.map(p => `<a class="row" href="#${p.id}"><img data-thumb="${p.id}" src="${thumb(p)}" alt="" loading="lazy"><span><b>${esc(p.title)}</b><small>${esc(p.subtitle)}</small></span><em>${p.reel ? 'Showreel' : p.vimeo ? 'Film' : 'Case study'}</em></a>`).join('')}</div>`;
   const talks = () => A.talks.map(t => `<li>${t.url ? `<a href="${t.url}" target="_blank" rel="noopener">${esc(t.what)}</a>` : esc(t.what)}</li>`).join('');
-  const works = () => `<section class="section" id="work"><div class="count">${String(product.length).padStart(2, '0')} <i>case studies</i></div>${rows(product)}</section>
-    <section class="section"><p class="eyebrow">On the side</p><h2 class="h2">AI campaigns</h2><p class="prose muted">${esc(A.fameplay)}</p>${rows(films)}</section>`;
+  const works = () => `<section class="section" id="work"><div class="count">${String(main.length).padStart(2, '0')} <i>case studies</i></div>${rows(main)}</section>
+    <section class="section"><p class="eyebrow">Since 2024</p><h2 class="h2">More recent work</h2>${rows(more)}</section>
+    <p class="path" style="margin-top:48px"><a href="#${films[0].id}">AI campaigns for cinema and TV ›</a> <span class="muted">The side passion.</span></p>`;
 
   function home() {
-    setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'extit-hero', 'kiwi-bundles-desktop', 'kbc-dashboard', 'clash-hero', 'x-fameplay-humanoid'].map(n => `assets/img/work/${n}.jpg`));
+    setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'kiwi-bundles-desktop', 'kbc-dashboard', 'kiwi-bundles-seatmap'].map(n => `assets/img/work/${n}.jpg`));
     view.innerHTML = `<section class="hero"><h1>Product Designer. <span>Monetization and complex flows.</span></h1>
       <p class="lead">I co-led Ancillaries at Kiwi.com, with one goal: take revenue per booking <b>from €2 to €25</b>. I also built product research from zero at Keboola. Former CMO and co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
       <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
@@ -48,7 +50,7 @@
         ['Details that earn money', 'Co-led Ancillaries at Kiwi.com, with a goal of €2 to €25 per booking and double the overall revenue. We A/B tested variants and kept what performed, using revenue, CX feedback, UX research and quantitative data.', 'See Bundles', 'kiwi/bundles'],
         ['Tested before building, reviewed after release', 'At Keboola I led interviews on prototypes before development, then post-release interviews and funnel reviews to see where users dropped off.', 'See how I test', 'keboola/testing'],
         ['Design systems, more than once', 'Design systems for product and website at Keboola, a shared component set for web, apps and email at Kiwi.com, and a global design system at SinnerSchrader.', 'See the components', 'kiwi/post-booking'],
-        ['Clean craft, beyond the product', 'Typography, grids and visual systems, from a whole studio identity to the websites I still design. I also prototype in code. This site is one.', 'See Fameplay', 'fameplay'],
+        ['Clean craft, beyond the product', 'Typography, grids and visual systems, down to the websites I still design. I also prototype in code. This site is one.', 'See EXTIT', 'extit'],
       ],
     },
   };
@@ -77,7 +79,7 @@
   const lis = l => l ? `<ul class="ul">${l.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : '';
 
   function kase(p, chapter) {
-    const list = p.vimeo ? films : product, i = list.indexOf(p), prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
+    const list = p.vimeo ? films : p.more ? more : main, i = list.indexOf(p), prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
     const shots = imgsOf(p); setStrip(shots.length ? shots.slice(0, 10) : films.map(thumb).filter(Boolean));
     const media = p.vimeo ? `<iframe class="media" src="https://player.vimeo.com/video/${p.vimeo}?title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${esc(p.title)}"></iframe>`
       : p.reel ? `<video class="media" src="${p.reel}" poster="${p.poster || p.hero}" controls muted loop playsinline preload="metadata" ${reduce ? '' : 'autoplay'} aria-label="${esc(p.title)} showreel with captions"></video>`
