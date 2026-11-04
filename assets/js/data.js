@@ -1130,30 +1130,55 @@ window.NOROLL = {
       ]
     },
     {
-      "id": "web",
-      "title": "Website",
-      "kicker": "A smaller part of the job",
-      "images": [
-        {
-          "src": "assets/img/work/pflb-home.jpg",
-          "alt": "PFLB website: homepage",
-          "size": "third",
-          "full": "assets/img/work/pflb-home-full.jpg"
-        },
-        {
-          "src": "assets/img/work/pflb-platform.jpg",
-          "alt": "PFLB website: platform",
-          "size": "third",
-          "full": "assets/img/work/pflb-platform-full.jpg"
-        },
-        {
-          "src": "assets/img/work/pflb-pricing.jpg",
-          "alt": "PFLB website: pricing",
-          "size": "third",
-          "full": "assets/img/work/pflb-pricing-full.jpg"
-        }
-      ]
+  "id": "web",
+  "title": "Website",
+  "kicker": "A smaller part of the job",
+  "text": "Marketing pages for the platform, in a dark and a light direction: hero, key features, how the platform works and pricing.",
+  "images": [
+    {
+      "src": "assets/img/work/pflbw-d-hero.jpg",
+      "w": 1400,
+      "h": 1170,
+      "alt": "PFLB website, dark direction: hero",
+      "size": "half"
+    },
+    {
+      "src": "assets/img/work/pflbw-l-hero.jpg",
+      "w": 1400,
+      "h": 583,
+      "alt": "PFLB website, light direction: hero",
+      "size": "half"
+    },
+    {
+      "src": "assets/img/work/pflbw-d-feat.jpg",
+      "w": 1400,
+      "h": 1468,
+      "alt": "PFLB website, dark direction: key features",
+      "size": "half"
+    },
+    {
+      "src": "assets/img/work/pflbw-l-how.jpg",
+      "w": 1400,
+      "h": 1127,
+      "alt": "PFLB website, light direction: how to use the platform",
+      "size": "half"
+    },
+    {
+      "src": "assets/img/work/pflbw-d-how.jpg",
+      "w": 1400,
+      "h": 1170,
+      "alt": "PFLB website, dark direction: how to use the platform",
+      "size": "half"
+    },
+    {
+      "src": "assets/img/work/pflbw-l-price.jpg",
+      "w": 1400,
+      "h": 1026,
+      "alt": "PFLB website, light direction: pricing",
+      "size": "half"
     }
+  ]
+}
   ]
 },
     {
