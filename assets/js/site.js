@@ -27,9 +27,7 @@
   const rows = list => `<div class="list">${list.map(p => `<a class="row" href="#${p.id}"><img data-thumb="${p.id}" src="${thumb(p)}" alt="" loading="lazy"><span><b>${esc(p.title)}</b><small>${esc(p.subtitle)}</small></span><em>${p.reel ? 'Showreel' : p.vimeo ? 'Film' : 'Case study'}</em></a>`).join('')}</div>`;
   const career = () => `<div class="career">${A.cv.map(r => `<div class="cvr"><span>${esc(r.when)}</span><div><b>${esc(r.what)}</b><small>${esc(r.where)}</small>${r.text ? `<p>${esc(r.text)}</p>` : ''}${r.link ? `<a href="#${r.link}">See the case study ›</a>` : ''}</div></div>`).join('')}</div>`;
   const talks = () => A.talks.map(t => `<li>${t.url ? `<a href="${t.url}" target="_blank" rel="noopener">${esc(t.what)}</a>` : esc(t.what)}</li>`).join('');
-  const works = () => `<section class="section" id="work"><div class="count">${String(main.length).padStart(2, '0')} <i>case studies</i></div>${rows(main)}</section>
-    <section class="section"><p class="eyebrow">Since 2024</p><h2 class="h2">More recent work</h2>${rows(more)}</section>
-    <p class="path" style="margin-top:48px"><a href="#${films[0].id}">AI campaigns for cinema and TV ›</a> <span class="muted">The side passion.</span></p>`;
+  const works = () => `<section class="section" id="work"><div class="count">${String(main.length).padStart(2, '0')} <i>case studies</i></div>${rows(main)}</section>`;
 
   function home() {
     setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'kiwi-bundles-desktop', 'kbc-dashboard', 'kiwi-bundles-seatmap'].map(n => `assets/img/work/${n}.jpg`));
@@ -38,7 +36,8 @@
       <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
       <a class="now" href="#kiwi" aria-label="Kiwi.com showreel"><span>Now playing</span><video src="assets/video/kiwi-showreel.mp4" poster="assets/img/work/kiwi-reel-poster.jpg" muted loop playsinline ${reduce ? '' : 'autoplay'}></video></a></section>
       <p class="path">${esc(A.path)}</p>${works()}
-      <section class="section" id="career"><p class="eyebrow">Since 2016</p><h2 class="h2">Career</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Full CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></section>`;
+      <section class="section" id="career"><p class="eyebrow">Since 2016</p><h2 class="h2">CV</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Full CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></section>
+      <p class="path" style="margin-top:48px"><a href="#${films[0].id}">AI campaigns for cinema and TV ›</a> <span class="muted">The side passion.</span></p>`;
   }
 
   /* a page for one reader */
