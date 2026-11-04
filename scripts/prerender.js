@@ -15,7 +15,7 @@ const projects = D.product.filter(x => !x.draft), main = projects.filter(x => !x
 const caseStudy = c => [
   `<section id="static-${c.id}">`, h(3, c.title), p(c.subtitle), p([c.type, c.client, c.production].filter(Boolean).join(' · ')),
   c.facts ? ul(c.facts.map(([n, l]) => `${n}: ${l}`)) : '', p(c.problem), p(c.text),
-  c.decisions ? h(4, 'Key decisions') + ul(c.decisions) : '', c.role ? h(4, 'My role') + ul(c.role) : '',
+  c.decisions ? h(4, 'Key decisions') + ul(c.decisions) : '', c.stance ? h(4, 'Selling without tricks') + p(c.stance) : '', c.role ? h(4, 'My role') + ul(c.role) : '',
   c.quote ? `<blockquote>${esc(c.quote.text)} — ${esc(c.quote.who)}</blockquote>` : '',
   ...(c.chapters || []).map(ch => [h(4, ch.title), p(ch.kicker), p(ch.text), ul(ch.list),
     ...(ch.steps || []).map(s => h(5, s.title) + p(s.text) + ul(s.list))].join('')),

@@ -101,7 +101,7 @@
       <section id="ch-o" style="scroll-margin-top:110px">
       ${p.facts ? `<div class="facts">${p.facts.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join('')}</div>` : ''}
       ${p.problem ? `<p class="prose">${esc(p.problem)}</p>` : ''}<p class="prose ${p.problem ? 'muted' : ''}">${esc(p.text)}</p>
-      ${p.decisions ? `<div class="ch" style="padding-top:44px"><h2>Key decisions</h2>${lis(p.decisions)}</div>` : ''}${p.role ? `<div class="ch" style="padding-top:44px"><h2>My role</h2>${lis(p.role)}</div>` : ''}
+      ${p.decisions ? `<div class="ch" style="padding-top:44px"><h2>Key decisions</h2>${lis(p.decisions)}</div>` : ''}${p.stance ? `<div class="ch" style="padding-top:44px"><h2>Selling without tricks</h2><p class="t">${esc(p.stance)}</p></div>` : ''}${p.role ? `<div class="ch" style="padding-top:44px"><h2>My role</h2>${lis(p.role)}</div>` : ''}
       ${p.tools ? `<div class="tags">${p.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
       ${p.quote ? `<blockquote class="quote">“${esc(p.quote.text)}”<cite>${esc(p.quote.who)}</cite></blockquote>` : ''}${p.vimeo ? '<p class="prose muted" style="font-size:14px">Produced for Czech Video Center (Fameplay) as a freelancer. All rights belong to Czech Video Center a.s.</p>' : ''}</section>
       ${chs.map(c => `<section class="ch${c.highlight ? ' ch--hl' : ''}" id="ch-${c.id}"><h2>${esc(c.title)}</h2>${c.kicker ? `<p class="ch__k">${esc(c.kicker)}</p>` : ''}${c.text ? `<p class="t">${esc(c.text)}</p>` : ''}${lis(c.list)}${gal(c.images)}${(c.steps || []).map(s => `<div class="step"><h3>${esc(s.title)}</h3>${s.text ? `<p class="t">${esc(s.text)}</p>` : ''}${lis(s.list)}${gal(s.images)}</div>`).join('')}</section>`).join('')}

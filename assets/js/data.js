@@ -158,6 +158,7 @@ window.NOROLL = {
       ],
       "problem": "Ancillaries are everything you buy on top of a flight. Bags, seats, AXA insurance, Kiwi.com Guarantee, Price Lock, fare types, service packages, bundles, Booking.com and Rentalcars. Each had its own team and its own idea of where to upsell. The business needed more revenue from it, the company was reorganising ownership mid-flight, and nobody had the full picture.",
       "text": "I took over the design team mid-reorg and co-led the domain with product and engineering. Everything below came out of design jams I ran with designers, PMs, engineers and, regularly, C-level. And a lot of it I designed with my own hands.",
+      "stance": "My job was also to keep ancillaries transparent, with no shady practices, in a domain under heavy pressure to grow revenue. One offer per product per stage, triggered by what the traveller was doing. Recommendations shown with the same table people had just seen, so an upgrade read as information, not a trick. The UI never promises what the ticket doesn’t include, and saying no stays clear, like the explicit “no insurance” option.",
       "decisions": [
         "Decisions kept changing with the evidence: we A/B tested variants and kept what performed, using revenue, CX feedback, UX research and quantitative data",
         "One upsell moment per product per stage, triggered by context (first MMB visit, before check-in when bags or seats are still available, after a schedule change), not by banner real estate",
