@@ -136,8 +136,12 @@ window.NOROLL = {
       "heroAlt": "Kiwi.com mobile screens: bundles, Guarantee, booking, insurance, seat map",
       "facts": [
         [
-          "~70%",
-          "of Kiwi.com revenue sits in the ancillaries domain"
+          "€2 → €25",
+          "the goal for ancillary revenue per booking"
+        ],
+        [
+          "2×",
+          "the goal for overall revenue, with ancillaries at around 50% of the mix"
         ],
         [
           "3",
