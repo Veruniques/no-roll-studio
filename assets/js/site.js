@@ -1,484 +1,132 @@
-/* noroll.studio — desktop portfolio
-   Plain JS, no build step. Data lives in data.js. */
+/* Veronika Dominiková — portfolio. Plain JS, no build step. Content lives in data.js. */
 (() => {
-  const D = window.NOROLL;
-  const $ = (s, r = document) => r.querySelector(s);
-  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const desktop = $('#desktop');
-  const layer = $('#windows');
-  const isMobile = () => matchMedia('(max-width: 760px)').matches;
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const D = window.NOROLL, A = D.about;
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const view = $('#view'), track = $('#track'), strip = $('.strip');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const product = D.product.filter(p => !p.draft), films = D.cinematic;
+  const all = [...product, ...films];
+  const vthumb = {};
+  const thumb = p => p.cover || vthumb[p.vimeo] || '';
+  films.forEach(p => fetch(`https://vimeo.com/api/oembed.json?url=${encodeURIComponent('https://vimeo.com/' + p.vimeo)}&width=640`).then(r => r.ok ? r.json() : null).then(j => { if (j && j.thumbnail_url) { vthumb[p.vimeo] = j.thumbnail_url; $$(`[data-thumb="${p.id}"]`).forEach(i => { i.src = j.thumbnail_url; }); } }).catch(() => {}));
 
-  // Vimeo thumbnails come from Vimeo's own oEmbed (CORS-enabled); gradient until they arrive
-  const thumbs = {};
-  const vimeoThumb = id => thumbs[id] || '';
-  const fallbackBg = (seed) => {
-    const hues = [152, 210, 28, 330, 260, 190];
-    const h = hues[seed.length % hues.length];
-    return `linear-gradient(135deg, hsl(${h} 45% 32%), hsl(${(h + 40) % 360} 40% 18%))`;
+  /* side strip: screens from whatever you're looking at */
+  const imgsOf = p => (p.chapters || []).flatMap(c => [...(c.images || []), ...(c.steps || []).flatMap(s => s.images || [])]).filter(i => (i.size !== 'third') && !/journey|boarding|emails|components/.test(i.src)).map(i => i.src);
+  let stripImgs = '';
+  function setStrip(list) {
+    const key = list.join();
+    if (key === stripImgs) return; stripImgs = key;
+    track.innerHTML = [...list, ...list, ...list].slice(0, 24).map(s => `<img src="${s}" alt="" loading="lazy">`).join('');
+  }
+  let t0 = performance.now();
+  function tick(now) { if (!reduce) track.style.transform = `translateY(${-((now - t0) / 70 % 900) - scrollY * .22}px)`; requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+
+  const rows = list => `<div class="list">${list.map(p => `<a class="row" href="#${p.id}"><img data-thumb="${p.id}" src="${thumb(p)}" alt="" loading="lazy"><span><b>${esc(p.title)}</b><small>${esc(p.subtitle)}</small></span><em>${p.reel ? 'Showreel' : p.vimeo ? 'Film' : 'Case study'}</em></a>`).join('')}</div>`;
+  const talks = () => A.talks.map(t => `<li>${t.url ? `<a href="${t.url}" target="_blank" rel="noopener">${esc(t.what)}</a>` : esc(t.what)}</li>`).join('');
+  const works = () => `<section class="section" id="work"><div class="count">${String(product.length).padStart(2, '0')} <i>case studies</i></div>${rows(product)}</section>
+    <section class="section"><p class="eyebrow">On the side</p><h2 class="h2">AI campaigns</h2><p class="prose muted">${esc(A.fameplay)}</p>${rows(films)}</section>`;
+
+  function home() {
+    setStrip(['kiwi-hero', 'kbc-flow-builder', 'kiwi-ff-desktop', 'extit-hero', 'kiwi-bundles-desktop', 'kbc-dashboard', 'clash-hero', 'x-fameplay-humanoid'].map(n => `assets/img/work/${n}.jpg`));
+    view.innerHTML = `<section class="hero"><h1>Lead Product Designer. <span>Monetization and complex flows.</span></h1>
+      <p class="lead">I co-led Ancillaries at Kiwi.com, the sub-domain behind <b>70% of company revenue</b>, and built product research from zero at Keboola. Former CMO and co-founder, so I tend to ask what a feature earns before asking what colour it is.</p>
+      <div class="cta"><a class="btn" href="#kiwi">Start with Kiwi.com</a><a class="btn btn--g" href="#work">All work</a><a class="btn btn--g" href="resume.html">CV</a></div>
+      <a class="now" href="#kiwi" aria-label="Kiwi.com showreel"><span>Now playing</span><video src="assets/video/kiwi-showreel.mp4" poster="assets/img/work/kiwi-reel-poster.jpg" muted loop playsinline ${reduce ? '' : 'autoplay'}></video></a></section>
+      <p class="path">${esc(A.path)}</p>${works()}`;
+  }
+
+  /* a page for one reader */
+  const FOR = {
+    revolut: {
+      h: 'Hi Revolut.', s: 'This page exists for one reader. Hopefully you.',
+      lead: 'I design commercial products end to end, on iOS, Android and web, in places where a tap has to earn something and a wrong one means a refund. Here’s the short route through my work, in the order I’d show it in the room.',
+      why: [
+        ['Discovery to delivery, on all three platforms', 'Fare Families at Kiwi.com: from the first sketch to handoff on web, iOS and Android, including refunds and the customer-service tool.', 'See Fare Families', 'kiwi/fare-families'],
+        ['Decisions I can defend', 'One feature, from the ticket and benchmark to design critique and what we took forward.', 'Read the decision story', 'kiwi/decision'],
+        ['Details that earn money', 'Co-led Ancillaries, the sub-domain behind 70% of Kiwi.com’s revenue: when an upsell appears, and when it should stay quiet.', 'See Bundles', 'kiwi/bundles'],
+        ['Research and data, built from zero', 'At Keboola I set up user research, data tracking and the product process, then took a data engineers’ platform to pay-as-you-go users.', 'See Keboola', 'keboola'],
+        ['Clean craft, beyond the product', 'Typography, grids and visual systems, from a whole studio identity to the websites I still design. I also prototype in code. This site is one.', 'See Fameplay', 'fameplay'],
+      ],
+    },
   };
-  const bg = (url, seed) => `url("${url}"), ${fallbackBg(seed)}`;
+  function forReader(k) {
+    const f = FOR[k]; setStrip(['kiwi-ff-desktop', 'kiwi-bundles-desktop', 'kbc-flow-builder', 'kiwi-ff-desktop2', 'kbc-dashboard'].map(n => `assets/img/work/${n}.jpg`));
+    view.innerHTML = `<section class="hero hero--for" style="min-height:0;padding-top:130px"><h1>${esc(f.h)} <span>${esc(f.s)}</span></h1><p class="lead">${esc(f.lead)}</p></section>
+      <div class="for__why">${f.why.map(([b, s, c, l]) => `<a href="#${l}"><b>${esc(b)}</b><span>${esc(s)}</span><em>${esc(c)} ›</em></a>`).join('')}</div>
+      <blockquote class="quote" style="max-width:var(--col);margin-top:48px">“${esc(D.product[0].quote.text)}”<cite>${esc(D.product[0].quote.who)}</cite></blockquote>
+      <div class="cta" style="margin-top:32px"><a class="btn" href="mailto:${D.owner.email}">Talk to me</a><a class="btn btn--g" href="resume.html">CV</a><a class="btn btn--g" href="#work">All work</a></div>
+      <p class="path" style="margin-top:56px">${esc(A.path)}</p>`;
+  }
 
-  /* ---------------- wallpaper + clock ---------------- */
-  $('.wallpaper').style.backgroundImage = `url("${D.owner.wallpaper}")`;
-  const clock = $('#clock');
-  const tick = () => {
-    clock.textContent = new Date().toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).replace(',', '');
+  function about() {
+    setStrip([1, 2, 3, 4].map(i => `assets/img/portrait-${i}.jpg`));
+    view.innerHTML = `<section class="case"><h1>About</h1>
+      <p class="prose">${A.intro.map(esc).join('</p><p class="prose">')}</p><p class="prose">${esc(A.path)}</p>
+      <div class="tags">${A.canDo.map(c => `<span>${esc(c)}</span>`).join('')}</div>
+      <div class="ch"><h2>On stage</h2><ul class="ul">${talks()}</ul></div>
+      <div class="ch"><h2>CV</h2><div style="margin-top:14px">${A.cv.map(r => `<div class="cvr"><span>${esc(r.when)}</span><div>${esc(r.what)}<small>${esc(r.where)}</small></div></div>`).join('')}</div><div class="cta"><a class="btn btn--g" href="resume.html">Plain-text CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></div>
+      <div class="ch"><h2>What people say</h2>${A.references.map(r => `<blockquote class="quote">“${esc(r.text)}”<cite>${esc(r.who)}, ${esc(r.role)}</cite></blockquote>`).join('')}</div>
+      <div class="ch"><h2>Tools</h2><div class="tags">${A.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div></div></section>`;
+  }
+
+  const fig = o => `<figure class="g g--${o.size || 'full'}"><img src="${o.src}"${o.w ? ` width="${o.w}" height="${o.h}"` : ''} alt="${esc(o.alt || '')}" loading="lazy" decoding="async" data-zoom${o.full ? ` data-full="${o.full}"` : ''}></figure>`;
+  const gal = l => l ? `<div class="gallery">${l.map(fig).join('')}</div>` : '';
+  const lis = l => l ? `<ul class="ul">${l.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : '';
+
+  function kase(p, chapter) {
+    const list = p.vimeo ? films : product, i = list.indexOf(p), prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
+    const shots = imgsOf(p); setStrip(shots.length ? shots.slice(0, 10) : films.map(thumb).filter(Boolean));
+    const media = p.vimeo ? `<iframe class="media" src="https://player.vimeo.com/video/${p.vimeo}?title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${esc(p.title)}"></iframe>`
+      : p.reel ? `<video class="media" src="${p.reel}" poster="${p.poster || p.hero}" controls muted loop playsinline preload="metadata" ${reduce ? '' : 'autoplay'} aria-label="${esc(p.title)} showreel with captions"></video>`
+      : p.hero ? `<img class="media heroimg" src="${p.hero}" alt="${esc(p.heroAlt || p.title)}" data-zoom>` : '';
+    const chs = p.chapters || [];
+    view.innerHTML = `<article class="case"><div class="case__n">${String(i + 1).padStart(2, '0')} — ${String(list.length).padStart(2, '0')}</div><h1>${esc(p.title)}</h1><p class="case__sub">${esc(p.subtitle)}</p>${media}
+      <div class="meta"><span><b>${esc(p.type)}</b></span><span>${esc(p.client)}</span>${p.production ? `<span>${esc(p.production)}</span>` : ''}${p.link ? `<a href="${p.link}" target="_blank" rel="noopener">${esc(p.link.replace(/^https:\/\/(www\.)?/, '').replace(/\/.*$/, ''))} ↗</a>` : ''}</div>
+      ${chs.length ? `<nav class="chips" aria-label="Chapters"><button data-j="o" class="on">Overview</button>${chs.map(c => `<button data-j="${c.id}"${c.highlight ? ' class="hl"' : ''}>${c.highlight ? '★ ' : ''}${esc(c.title)}</button>`).join('')}</nav>` : ''}
+      <section id="ch-o" style="scroll-margin-top:110px">
+      ${p.facts ? `<div class="facts">${p.facts.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join('')}</div>` : ''}
+      ${p.problem ? `<p class="prose">${esc(p.problem)}</p>` : ''}<p class="prose ${p.problem ? 'muted' : ''}">${esc(p.text)}</p>
+      ${p.decisions ? `<div class="ch" style="padding-top:44px"><h2>Key decisions</h2>${lis(p.decisions)}</div>` : ''}${p.role ? `<div class="ch" style="padding-top:44px"><h2>My role</h2>${lis(p.role)}</div>` : ''}
+      ${p.tools ? `<div class="tags">${p.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
+      ${p.quote ? `<blockquote class="quote">“${esc(p.quote.text)}”<cite>${esc(p.quote.who)}</cite></blockquote>` : ''}${p.vimeo ? '<p class="prose muted" style="font-size:14px">Produced for Czech Video Center (Fameplay) as a freelancer. All rights belong to Czech Video Center a.s.</p>' : ''}</section>
+      ${chs.map(c => `<section class="ch${c.highlight ? ' ch--hl' : ''}" id="ch-${c.id}"><h2>${esc(c.title)}</h2>${c.kicker ? `<p class="ch__k">${esc(c.kicker)}</p>` : ''}${c.text ? `<p class="t">${esc(c.text)}</p>` : ''}${lis(c.list)}${gal(c.images)}${(c.steps || []).map(s => `<div class="step"><h3>${esc(s.title)}</h3>${s.text ? `<p class="t">${esc(s.text)}</p>` : ''}${lis(s.list)}${gal(s.images)}</div>`).join('')}</section>`).join('')}
+      <nav class="next"><a href="#${prev.id}"><small>Previous</small>${esc(prev.title)}</a><a href="#${next.id}"><small>Next</small>${esc(next.title)}</a></nav></article>`;
+    $$('[data-j]').forEach(b => b.addEventListener('click', () => $('#ch-' + b.dataset.j)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })));
+    const secs = $$('[id^="ch-"]');
+    window.__spy = () => { let cur = secs[0]; secs.forEach(s => { if (s.getBoundingClientRect().top < 170) cur = s; }); const id = cur?.id.slice(3); $$('[data-j]').forEach(b => { const on = b.dataset.j === id; if (on && !b.classList.contains('on')) b.parentElement.scrollTo({ left: b.offsetLeft - 40, behavior: 'smooth' }); b.classList.toggle('on', on); }); };
+    if (chapter) setTimeout(() => $('#ch-' + chapter)?.scrollIntoView(), 60);
+  }
+  addEventListener('scroll', () => window.__spy && window.__spy(), { passive: true });
+
+  function route() {
+    window.__spy = null;
+    const h = decodeURIComponent(location.hash.slice(1)), r = (D.redirects && D.redirects[h]) || h, [id, ch] = r.split('/');
+    const p = all.find(x => x.id === id);
+    const scrollTop = id !== 'work';
+    if (p) kase(p, ch); else if (id === 'about') about(); else if (FOR[id]) forReader(id); else home();
+    strip.classList.add('on');
+    view.style.animation = 'none'; void view.offsetWidth; view.style.animation = '';
+    $$('.top nav a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
+    if (id === 'work') setTimeout(() => $('#work')?.scrollIntoView(), 30); else if (scrollTop && !ch) scrollTo({ top: 0, behavior: 'auto' });
+    document.title = (p ? p.title + ' — ' : FOR[id] ? 'For ' + id[0].toUpperCase() + id.slice(1) + ' — ' : '') + 'Veronika Dominiková, Lead Product Designer';
+  }
+  addEventListener('hashchange', route);
+
+  /* dock */
+  $$('[data-go]').forEach(b => b.addEventListener('click', () => { const g = '#' + b.dataset.go; if (location.hash === g) route(); else location.hash = g; }));
+  const dialog = (title, html, cta) => {
+    const m = $('#modal'); m.innerHTML = `<div class="dlg" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="dlg__b"><h3>${esc(title)}</h3>${html}<button class="btn">${esc(cta)}</button></div></div>`;
+    const close = () => { m.innerHTML = ''; }; $('.btn', m).focus(); $('.btn', m).addEventListener('click', close); $('.dlg', m).addEventListener('click', e => { if (e.target.classList.contains('dlg')) close(); });
   };
-  tick(); setInterval(tick, 15000);
-
-  /* ---------------- desktop icons ---------------- */
-  const all = [
-    ...D.cinematic.map(p => ({ ...p, kind: 'cinematic' })),
-    ...D.product.filter(p => !p.draft).map(p => ({ ...p, kind: 'product' })),
-  ];
-  const byId = Object.fromEntries(all.map(p => [p.id, p]));
-
-  function caption(text, x, y, kind) {
-    const el = document.createElement('div');
-    el.className = 'desk-caption';
-    el.dataset.kind = kind;
-    el.textContent = text;
-    el.style.left = x + '%'; el.style.top = y + '%';
-    desktop.appendChild(el);
-  }
-
-  function folderSvg(color) {
-    return `<svg class="folder-svg" viewBox="0 0 70 56" aria-hidden="true">
-      <path d="M2 8a4 4 0 0 1 4-4h18l5 5h35a4 4 0 0 1 4 4v3H2z" fill="${color}" opacity=".85"/>
-      <rect x="2" y="13" width="66" height="41" rx="4" fill="${color}"/>
-      <rect x="2" y="13" width="66" height="4" fill="#fff" opacity=".25"/></svg>`;
-  }
-
-  function addIcon({ id, label, thumbStyle, cls, x, y, kind, open }) {
-    const el = document.createElement('div');
-    el.className = `icon ${cls || ''}`;
-    el.dataset.kind = kind;
-    el.dataset.id = id;
-    el.tabIndex = 0;
-    el.setAttribute('role', 'button');
-    el.setAttribute('aria-label', `Open ${label}`);
-    el.innerHTML = `<div class="icon__thumb"></div><div class="icon__label">${esc(label)}</div>`;
-    const thumb = el.firstElementChild;
-    if (typeof thumbStyle === 'string' && thumbStyle.startsWith('<')) thumb.innerHTML = thumbStyle;
-    else thumb.style.backgroundImage = thumbStyle;
-    el.style.left = `calc(${x}% - 58px)`;
-    el.style.top = `calc(${y}% - 10px)`;
-    desktop.appendChild(el);
-    makeIconInteractive(el, open);
-    return el;
-  }
-
-  caption('Cinematic', 4, 4, 'cinematic');
-  caption('Product design', 64, 4, 'product');
-
-  addIcon({ id: 'folder-cinematic', label: 'Cinematic', kind: 'cinematic', cls: 'icon--folder', thumbStyle: folderSvg('#3f8f6e'), x: 41, y: 10, open: () => openFolder('cinematic') });
-  addIcon({ id: 'folder-product', label: 'Product Design', kind: 'product', cls: 'icon--folder', thumbStyle: folderSvg('#4a83e6'), x: 55, y: 10, open: () => openFolder('product') });
-
-  all.forEach(p => addIcon({
-    id: p.id,
-    label: p.title,
-    kind: p.kind,
-    cls: p.kind === 'cinematic' ? 'icon--video' : '',
-    thumbStyle: bg(p.kind === 'cinematic' ? vimeoThumb(p.vimeo) : p.cover, p.id),
-    x: p.x, y: p.y,
-    open: () => openProject(p.id),
-  }));
-
-  D.cinematic.forEach(p => {
-    fetch(`https://vimeo.com/api/oembed.json?url=${encodeURIComponent('https://vimeo.com/' + p.vimeo)}&width=640`)
-      .then(r => r.ok ? r.json() : null)
-      .then(j => {
-        if (!j || !j.thumbnail_url) return;
-        thumbs[p.vimeo] = j.thumbnail_url;
-        $$(`[data-id="${p.id}"] .icon__thumb, [data-thumb="${p.id}"]`).forEach(t => { t.style.backgroundImage = bg(j.thumbnail_url, p.id); });
-      })
-      .catch(() => {});
-  });
-
-  /* select / drag / double-click */
-  let selected = null;
-  function select(el) {
-    if (selected) selected.classList.remove('is-selected');
-    selected = el;
-    if (el) el.classList.add('is-selected');
-  }
-  desktop.addEventListener('pointerdown', e => { if (e.target === desktop) select(null); });
-
-  function makeIconInteractive(el, open) {
-    let start = null, moved = false, lastTap = 0;
-    el.addEventListener('pointerdown', e => {
-      if (isMobile()) return;
-      select(el);
-      start = { x: e.clientX, y: e.clientY, l: el.offsetLeft, t: el.offsetTop };
-      moved = false;
-      el.setPointerCapture(e.pointerId);
-    });
-    el.addEventListener('pointermove', e => {
-      if (!start) return;
-      const dx = e.clientX - start.x, dy = e.clientY - start.y;
-      if (!moved && Math.hypot(dx, dy) < 4) return;
-      moved = true;
-      el.classList.add('is-dragging');
-      const maxL = desktop.clientWidth - el.offsetWidth, maxT = desktop.clientHeight - el.offsetHeight - 70;
-      el.style.left = Math.max(0, Math.min(maxL, start.l + dx)) + 'px';
-      el.style.top = Math.max(0, Math.min(maxT, start.t + dy)) + 'px';
-    });
-    el.addEventListener('pointerup', () => {
-      el.classList.remove('is-dragging');
-      start = null;
-    });
-    // desktop: double-click opens; touch/mobile: single tap opens
-    el.addEventListener('dblclick', () => { if (!moved) open(); });
-    el.addEventListener('click', e => {
-      if (isMobile() || e.pointerType === 'touch') { open(); return; }
-      const now = Date.now();
-      if (now - lastTap < 350 && !moved) { /* dblclick handles it */ }
-      lastTap = now;
-    });
-    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-  }
-
-  /* ---------------- filters ---------------- */
-  function setFilter(kind) {
-    $$('.menubar__item[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === kind)));
-    $$('.icon, .desk-caption').forEach(el => el.classList.toggle('is-dimmed', kind !== 'all' && el.dataset.kind !== kind));
-  }
-  $$('.menubar__item[data-filter]').forEach(b => b.addEventListener('click', () => setFilter(b.dataset.filter)));
-
-  /* ---------------- windows ---------------- */
-  const open = new Map();
-  let z = 200, cascade = 0;
-
-  function focusWin(win) { win.style.zIndex = ++z; }
-
-  function createWindow({ key, title, body, cls = '', raw = false, side = 'left' }) {
-    if (open.has(key)) { const w = open.get(key); focusWin(w); return w; }
-    const win = document.createElement('section');
-    win.className = `win ${cls}`;
-    win.setAttribute('role', 'dialog');
-    win.setAttribute('aria-label', title.replace(/<[^>]+>/g, ''));
-    win.innerHTML = `
-      <div class="win__bar">
-        <div class="lights"><button class="l-close" aria-label="Close"></button><button class="l-min" aria-label="Minimise"></button><button class="l-max" aria-label="Zoom"></button></div>
-        <div class="win__title">${title}</div>
-      </div>
-      ${raw ? body : `<div class="win__body">${body}</div>`}`;
-    layer.appendChild(win);
-
-    // position: cascade from top-left-ish, centred on small screens
-    const w = win.offsetWidth, h = win.offsetHeight;
-    const vw = innerWidth, vh = innerHeight;
-    const step = (cascade++ % 6) * 28;
-    const anchor = side === 'right' ? vw - w - vw * 0.08 - step : vw * 0.08 + step;
-    let left = Math.max(12, Math.min(vw - w - 12, anchor));
-    let top = Math.max(40, Math.min(vh - h - 90, 56 + step));
-    if (cls.includes('win--case')) { left = Math.max(12, (vw - w) / 2); top = 38; }
-    if (cls.includes('win--dialog')) { left = (vw - w) / 2 + (Math.random() * 120 - 60); top = vh * 0.28 + (Math.random() * 80 - 40); }
-    win.style.left = left + 'px';
-    win.style.top = top + 'px';
-    focusWin(win);
-
-    win.addEventListener('pointerdown', () => focusWin(win));
-    $('.l-close', win).addEventListener('click', () => closeWindow(key));
-    $('.l-min', win).addEventListener('click', () => closeWindow(key));
-    $('.l-max', win).addEventListener('click', () => win.classList.toggle('win--wide'));
-    dragWindow(win, $('.win__bar', win));
-    open.set(key, win);
-    markDock(key, true);
-    return win;
-  }
-
-  function closeWindow(key) {
-    const win = open.get(key);
-    if (!win) return;
-    open.delete(key);
-    markDock(key, false);
-    win.classList.add('is-closing');
-    win.addEventListener('animationend', () => win.remove(), { once: true });
-    setTimeout(() => win.remove(), 250);
-    if (location.hash.slice(1) === key) history.replaceState(null, '', location.pathname);
-  }
-
-  function dragWindow(win, handle) {
-    let s = null;
-    handle.addEventListener('pointerdown', e => {
-      if (e.target.closest('.lights') || isMobile()) return;
-      s = { x: e.clientX, y: e.clientY, l: win.offsetLeft, t: win.offsetTop };
-      handle.setPointerCapture(e.pointerId);
-    });
-    handle.addEventListener('pointermove', e => {
-      if (!s) return;
-      win.style.left = Math.max(-win.offsetWidth + 80, Math.min(innerWidth - 80, s.l + e.clientX - s.x)) + 'px';
-      win.style.top = Math.max(28, Math.min(innerHeight - 40, s.t + e.clientY - s.y)) + 'px';
-    });
-    handle.addEventListener('pointerup', () => { s = null; });
-  }
-
-  function markDock(key, on) {
-    const map = { 'folder-cinematic': 'folder-cinematic', 'folder-product': 'folder-product', about: 'about', photos: 'photos', contact: 'contact', bin: 'bin' };
-    const b = map[key] && $(`.dock [data-open="${map[key]}"]`);
-    if (b) b.classList.toggle('is-open', on);
-  }
-
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape' || !open.size) return;
-    const top = [...open.entries()].sort((a, b) => b[1].style.zIndex - a[1].style.zIndex)[0];
-    closeWindow(top[0]);
-  });
-
-  /* ---------------- window contents ---------------- */
-  const list = items => `<ul class="dash-list">${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`;
-  const details = (label, inner, isOpen = true) => `<details class="disclosure" ${isOpen ? 'open' : ''}><summary>${label}:</summary><div class="disclosure__body">${inner}</div></details>`;
-
-  function openProject(ref) {
-    const target = (D.redirects && D.redirects[ref]) || ref;
-    const [id, chapter] = String(target).split('/');
-    const p = byId[id];
-    if (!p) return;
-    history.replaceState(null, '', '#' + id);
-    if (p.kind === 'product' && p.chapters) return openCase(p, chapter);
-    const head = `<div class="info-head"><div class="info-head__thumb" data-thumb="${p.id}" style='background-image:${bg(p.kind === 'cinematic' ? vimeoThumb(p.vimeo) : p.cover, p.id)}'></div><div><h2>${esc(p.title)}</h2><p>${esc(p.subtitle)}</p></div></div>`;
-    const meta = `<dl class="kv"><dt>Type:</dt><dd>${esc(p.type)}</dd><dt>Client:</dt><dd>${esc(p.client)}</dd></dl>`;
-
-    let body;
-    if (p.kind === 'cinematic') {
-      body = `${head}
-        <div class="video"><iframe src="https://player.vimeo.com/video/${p.vimeo}?title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy" title="${esc(p.title)}"></iframe></div>
-        ${details('Details', p.production ? meta.replace('</dl>', `<dt>Production:</dt><dd>${esc(p.production)}</dd></dl>`) : meta)}
-        ${details('About', `<div class="info-text"><p>${esc(p.text)}</p></div>`)}
-        ${p.role ? details('My role', list(p.role)) : ''}
-        ${p.tools ? details('Tools', `<div class="tags">${p.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div>`) : ''}
-`;
-    } else {
-      const imgs = p.images.map((im, i) => {
-        const o = typeof im === 'string' ? { src: im } : im;
-        return `<img src="${o.src}" alt="${esc(o.alt || p.title + ' screen ' + (i + 1))}" loading="lazy" data-zoom${o.strip ? ' class="is-strip"' : ''}>`;
-      }).join('');
-      const facts = p.facts ? `<div class="facts">${p.facts.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join('')}</div>` : '';
-      const quote = p.quote ? `<blockquote class="quote"><p>“${esc(p.quote.text)}”</p><cite>${esc(p.quote.who)}</cite></blockquote>` : '';
-      body = `${head}
-        ${facts}
-        ${p.problem ? `<div class="info-text"><p class="lead"><b>The problem.</b> ${esc(p.problem)}</p></div>` : ''}
-        <div class="info-text"><p>${esc(p.text)}</p></div>
-        ${p.approach ? details('What I did', list(p.approach)) : ''}
-        ${p.decisions ? details('Key decisions', list(p.decisions)) : ''}
-        ${p.outcome ? details('Outcome', list(p.outcome)) : ''}
-        ${quote}
-        ${details('Details', meta, false)}
-        ${p.role ? details('My role', list(p.role), false) : ''}
-        ${p.challenges ? details('Product challenges', list(p.challenges), false) : ''}
-        ${details('Preview', `<div class="preview-grid">${imgs}</div>`)}`;
-    }
-    const win = createWindow({ key: id, title: `Information about: <b>${esc(p.title)}</b>`, body, cls: p.kind === 'product' ? 'win--wide' : '', side: p.kind === 'product' ? 'left' : 'right' });
-    $$('img', win).forEach(img => img.addEventListener('error', () => {
-      const ph = document.createElement('div');
-      ph.className = 'ph'; ph.textContent = 'Image coming soon';
-      img.replaceWith(ph);
-    }));
-  }
-
-  /* big case-study window: hero, overview, chapter nav, galleries */
-  function openCase(p, chapter) {
-    const fig = o => `<figure class="g g--${o.size || 'full'}"><img src="${o.src}"${o.w ? ` width="${o.w}" height="${o.h}"` : ''} alt="${esc(o.alt || p.title)}" loading="lazy" decoding="async" data-zoom${o.full ? ` data-full="${o.full}"` : ''}>${o.full ? '<span class="g__more">Full page ↗</span>' : ''}</figure>`;
-    const facts = p.facts ? `<div class="facts">${p.facts.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join('')}</div>` : '';
-    const quote = p.quote ? `<blockquote class="quote"><p>“${esc(p.quote.text)}”</p><cite>${esc(p.quote.who)}</cite></blockquote>` : '';
-    const nav = `<nav class="case__nav" aria-label="Chapters"><div class="case__nav-track">
-      <button data-jump="overview"><span class="n">00</span>Overview</button>
-      ${p.chapters.map((c, i) => `<button data-jump="${c.id}"${c.highlight ? ' class="is-hl"' : ''}><span class="n">${c.highlight ? '★' : String(i + 1).padStart(2, '0')}</span>${esc(c.title)}</button>`).join('')}
-    </div></nav>`;
-    const hl = p.chapters.find(c => c.highlight);
-    const callout = hl ? `<button class="callout" data-jump="${hl.id}"><span class="callout__tag">★ Start here</span><span class="callout__title">${esc(hl.title)}</span><span class="callout__text">${esc(hl.teaser || hl.kicker || '')}</span><span class="callout__go">Read →</span></button>` : '';
-    const chapters = p.chapters.map((c, i) => `
-      <section class="chapter${c.highlight ? ' chapter--hl' : ''}" id="ch-${p.id}-${c.id}">
-        <header class="chapter__head"><span class="chapter__no">${String(i + 1).padStart(2, '0')}</span><div><h3>${esc(c.title)}</h3>${c.kicker ? `<p>${esc(c.kicker)}</p>` : ''}</div></header>
-        ${c.text ? `<p class="chapter__text">${esc(c.text)}</p>` : ''}
-        ${c.list ? `<ul class="dash-list chapter__list">${c.list.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}
-        ${c.images ? `<div class="gallery">${c.images.map(fig).join('')}</div>` : ''}
-        ${c.steps ? c.steps.map(st => `<div class="step">
-          <h4>${esc(st.title)}</h4>
-          ${st.text ? `<p class="chapter__text">${esc(st.text)}</p>` : ''}
-          ${st.list ? `<ul class="dash-list chapter__list">${st.list.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}
-          ${st.images ? `<div class="gallery">${st.images.map(fig).join('')}</div>` : ''}
-        </div>`).join('') : ''}
-      </section>`).join('');
-    const body = `<div class="win__body case">
-      ${p.hero ? `<img class="case__hero" src="${p.hero}" alt="${esc(p.heroAlt || p.title)}" data-zoom>` : ''}
-      <header class="case__head"><div><h2>${esc(p.title)}</h2><p>${esc(p.subtitle)}</p></div><dl class="kv"><dt>Type</dt><dd>${esc(p.type)}</dd><dt>Client</dt><dd>${esc(p.client)}</dd></dl></header>
-      ${nav}
-      <section class="chapter chapter--overview" id="ch-${p.id}-overview">
-        ${callout}
-        ${facts}
-        <div class="case__intro">
-          ${p.problem ? `<p class="lead"><b>The problem.</b> ${esc(p.problem)}</p>` : ''}
-          <p>${esc(p.text)}</p>
-        </div>
-        ${p.decisions ? details('Key decisions', list(p.decisions)) : ''}
-        ${p.role ? details('My role', list(p.role), false) : ''}
-        ${quote}
-      </section>
-      ${chapters}
-    </div>`;
-    const win = createWindow({ key: p.id, title: `Information about: <b>${esc(p.title)}</b>`, body, raw: true, cls: 'win--case' });
-    const scroller = $('.case', win);
-    $$('[data-jump]', win).forEach(b => b.addEventListener('click', () => {
-      const t = $(`#ch-${p.id}-${b.dataset.jump}`, win);
-      if (t) scroller.scrollTo({ top: t.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - 70, behavior: 'smooth' });
-    }));
-    // highlight current chapter in the nav
-    const secs = $$('.chapter', win);
-    scroller.addEventListener('scroll', () => {
-      let cur = secs[0];
-      const top0 = scroller.getBoundingClientRect().top; secs.forEach(s => { if (s.getBoundingClientRect().top - top0 <= 140) cur = s; });
-      $$('.case__nav [data-jump]', win).forEach(b => {
-        const on = cur.id.endsWith('-' + b.dataset.jump);
-        if (on && !b.classList.contains('is-on')) { const tr = b.parentElement; tr.scrollTo({ left: b.offsetLeft - (tr.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' }); }
-        b.classList.toggle('is-on', on);
-      });
-    }, { passive: true });
-    if (chapter) {
-      const go = () => { const t = $(`#ch-${p.id}-${chapter}`, win); if (t) scroller.scrollTop = t.offsetTop - 56; };
-      requestAnimationFrame(go); setTimeout(go, 400); $('.case__hero', win)?.addEventListener('load', go, { once: true });
-    }
-    $$('img', win).forEach(img => img.addEventListener('error', () => { img.closest('figure')?.remove(); }));
-  }
-
-  function openFolder(kind) {
-    const items = all.filter(p => p.kind === kind);
-    const rows = items.map(p => `
-      <button class="finder__row" data-go="${p.id}">
-        <span class="finder__thumb" data-thumb="${p.id}" style='background-image:${bg(kind === 'cinematic' ? vimeoThumb(p.vimeo) : p.cover, p.id)}'></span>
-        <span>${esc(p.title)}<br><small>${esc(p.subtitle)}</small></span>
-        <small>${kind === 'cinematic' ? 'Video' : 'Case study'}</small>
-      </button>`).join('');
-    const intro = kind === 'cinematic'
-      ? `<div class="info-text" style="margin-bottom:10px"><p>${esc(D.about.fameplay)}</p></div><p class="rights" style="margin:0 0 10px">Produced for Czech Video Center (Fameplay) as a freelancer. All rights belong to Czech Video Center a.s.</p>`
-      : `<div class="info-text" style="margin-bottom:10px"><p>Product design lead with a decade around products: design teams, research, design systems and the stubborn bits between business and engineering. Hundreds of screens for Kiwi.com, Keboola and PFLB, plus brands on the side.</p></div>`;
-    const win = createWindow({
-      key: 'folder-' + kind,
-      title: `<b>${kind === 'cinematic' ? 'Cinematic' : 'Product Design'}</b> — ${items.length} items`,
-      body: intro + `<div class="finder">${rows}</div>`,
-    });
-    $$('[data-go]', win).forEach(b => b.addEventListener('click', () => openProject(b.dataset.go)));
-    setFilter(kind);
-  }
-
-  function openAbout(tab = 'about') {
-    const A = D.about;
-    const panes = {
-      about: `<p>${A.intro.map(esc).join('</p><p>')}</p>
-        <p style="margin-top:14px"><b>I can do…</b></p>
-        <ul class="check-list">${A.canDo.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
-        <div class="emmy"><b>Fameplay.</b> ${esc(A.fameplay)}</div>`,
-      cv: A.cv.map(r => `<div class="cv-row"><span>${esc(r.when)}</span><div>${esc(r.what)}<small>${esc(r.where)}</small></div></div>`).join('') +
-        `<p style="margin-top:12px"><a href="${D.owner.linkedin}" target="_blank" rel="noopener">Full history on LinkedIn ↗</a></p>`,
-      refs: A.references.map(r => `<blockquote class="quote"><p>“${esc(r.text)}”</p><cite>${esc(r.who)}<small>${esc(r.role)}</small></cite></blockquote>`).join('') +
-        `<p style="margin-top:12px;color:var(--ink-soft)">Full reference letters available on request.</p>`,
-      tools: `<p>From ComfyUI to Weavy and all the top-notch models. Tools are the crew. Direction is the job.</p><div class="tags">${A.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div>`,
-    };
-    const tabs = [['about', 'About me', ''], ['cv', 'CV', String(new Date().getFullYear() - 2018) + ' yrs'], ['refs', 'References', A.references.length], ['tools', 'Tools', A.tools.length]];
-    const body = `<div class="split">
-      <div class="split__side" role="tablist">${tabs.map(([k, l, n]) => `<button role="tab" data-tab="${k}" aria-selected="${k === tab}">${l}<small>${n}</small></button>`).join('')}</div>
-      <div class="split__main" id="about-pane">${panes[tab]}</div></div>`;
-    const win = createWindow({ key: 'about', title: `Information about: <b>${esc(D.owner.name)}</b>`, body, raw: true, cls: 'win--wide' });
-    $$('[data-tab]', win).forEach(b => b.addEventListener('click', () => {
-      $$('[data-tab]', win).forEach(x => x.setAttribute('aria-selected', String(x === b)));
-      $('#about-pane', win).innerHTML = panes[b.dataset.tab];
-    }));
-  }
-
-  function openPhotos() {
-    const shots = ['assets/img/portrait-1.jpg', 'assets/img/portrait-2.jpg', 'assets/img/portrait-3.jpg'];
-    const body = `<div class="info-head"><div class="info-head__thumb" style="background:#fff"><span class="ic ic--photos" style="width:46px;height:46px;box-shadow:none"></span></div><div><h2>Portraits</h2><p>The director behind the dice</p></div></div>
-      <div class="photo-strip">${shots.map(s => `<img src="${s}" alt="Portrait of ${esc(D.owner.name)}" loading="lazy" data-zoom>`).join('')}
-      <img class="wide" src="assets/img/portrait-4.jpg" alt="Cinematic portrait of ${esc(D.owner.name)}" loading="lazy" data-zoom></div>`;
-    createWindow({ key: 'photos', title: 'Information about: <b>Portraits</b>', body });
-  }
-
-  function openContact() {
-    const body = `<div class="info-head"><div class="info-head__thumb" style="background:none"><span class="ic ic--mail" style="width:46px;height:46px">✉</span></div><div><h2>New message</h2><p>To: ${esc(D.owner.name)}</p></div></div>
-      <form class="form" id="contact-form">
-        <label>What do you need directed?
-          <select name="type"><option>AI commercial / spot</option><option>Product design (UX/UI)</option><option>Short-form content</option><option>B2B video</option><option>Website</option><option>Something else</option></select></label>
-        <label>Your email<input type="email" name="email" required autocomplete="email"></label>
-        <label>Message<textarea name="message" required placeholder="The idea, the deadline, the mood. I dunno is also a mood."></textarea></label>
-        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
-        <button class="btn" type="submit">Send</button>
-        <p class="form__note" aria-live="polite"></p>
-      </form>`;
-    const win = createWindow({ key: 'contact', title: '<b>New Message</b>', body, cls: 'win--small' });
-    const form = $('#contact-form', win);
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const note = $('.form__note', form), btn = $('.btn', form);
-      btn.disabled = true; note.textContent = 'Sending…';
-      try {
-        const r = await fetch(D.owner.formspree, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-        if (!r.ok) throw new Error();
-        form.reset(); note.textContent = 'Sent. I’ll get back to you soon.';
-      } catch {
-        note.textContent = 'That didn’t go through. Try LinkedIn instead.';
-      } finally { btn.disabled = false; }
-    });
-  }
-
-  function openBin() {
-    const body = `<div class="info-head"><div class="info-head__thumb" style="background:none"><span class="ic ic--bin" style="width:46px;height:46px"></span></div><div><h2>Bin of rejected rolls</h2><p>Unrelated, yet educational</p></div></div>
-      <div class="info-text">
-        <p>Every shot in this portfolio had siblings. Most of them had seven fingers.</p>
-        <p>Also in here: one horse with five legs, a coffee cup that turned into a cat halfway through the pour, and roughly 2,400 generations that were “almost there”.</p>
-        <p>That’s the difference between rolling the dice and directing. You don’t ship the bin.</p>
-      </div>`;
-    createWindow({ key: 'bin', title: 'Information about: <b>Bin</b>', body });
-  }
-
-  const jokes = {
-    comfy: ['ComfyUI', 'ic--comfy', 'Cf', 'Out of VRAM. Your 47 nodes have left the chat. The noodles are still there though.', 'Restart and pray'],
-    mj: ['Midjourney', 'ic--mj', 'Mj', 'Job queued. Estimated wait: the rest of your weekend.', 'Upscale anyway'],
-    figma: ['Figma', 'ic--fg', 'Fg', 'Someone renamed “Final_v7_REAL” to “Final_v8”. Engineering is already building v6.', 'Accept fate'],
-    dice: ['Random generate', 'ic--dice', '⚄', 'You rolled a 3. The client wanted a 6. This is why there is a director.', 'Hire one'],
-  };
-  function openJoke(k) {
-    const [app, cls, glyph, text, cta] = jokes[k];
-    const key = 'joke-' + k + '-' + Date.now();
-    const win = createWindow({
-      key, title: app, cls: 'win--dialog', raw: true,
-      body: `<div class="dialog"><span class="ic ${cls}">${glyph}</span><div>${esc(text)}</div><div class="dialog__actions"><button class="btn">${esc(cta)}</button></div></div>`,
-    });
-    $('.dialog .btn', win).addEventListener('click', () => closeWindow(key));
-  }
-
-  /* ---------------- wiring ---------------- */
-  const openers = {
-    about: () => openAbout(),
-    photos: openPhotos,
-    contact: openContact,
-    bin: openBin,
-    'folder-cinematic': () => openFolder('cinematic'),
-    'folder-product': () => openFolder('product'),
-  };
-  $$('[data-open]').forEach(b => b.addEventListener('click', () => {
-    const k = b.dataset.open;
-    if (open.has(k)) closeWindow(k); else openers[k]();
-  }));
-  $$('[data-joke]').forEach(b => b.addEventListener('click', () => openJoke(b.dataset.joke)));
-
-  // lightbox for preview images
+  const jokes = { figma: ['Figma', 'Someone renamed “Final_v7_REAL” to “Final_v8”. Engineering is already building v6.', 'Accept fate'], claude: ['Claude', 'Helped build this portfolio. Still not allowed to pick the final font.', 'Fair'] };
+  $$('[data-joke]').forEach(b => b.addEventListener('click', () => { const [t, x, c] = jokes[b.dataset.joke]; dialog(t, `<p>${esc(x)}</p>`, c); }));
+  $('[data-bin]').addEventListener('click', () => dialog('Bin of rejected rolls', '<p>Every shot in this portfolio had siblings. Most of them had seven fingers.</p><p>Also in here: one horse with five legs, and roughly 2,400 generations that were “almost there”.</p><p>You don’t ship the bin.</p>', 'Empty it. Don’t.'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { $('#modal').innerHTML = ''; $('.lb')?.remove(); } });
   document.addEventListener('click', e => {
-    const img = e.target.closest('img[data-zoom]');
-    if (!img) return;
-    const lb = document.createElement('div');
-    const full = img.dataset.full;
-    lb.className = 'lightbox' + (full ? ' lightbox--page' : '');
-    lb.innerHTML = `<img src="${full || img.currentSrc || img.src}" alt="${esc(img.alt)}">${full ? '<button class="lightbox__close" aria-label="Close">×</button>' : ''}`;
-    lb.addEventListener('click', ev => { if (!full || ev.target === lb || ev.target.closest('.lightbox__close')) lb.remove(); });
-    document.addEventListener('keydown', function k(ev) { if (ev.key === 'Escape') { lb.remove(); document.removeEventListener('keydown', k); } });
-    document.body.appendChild(lb);
+    const img = e.target.closest('img[data-zoom]'); if (!img) return;
+    const lb = document.createElement('div'); lb.className = 'lb'; lb.innerHTML = `<img src="${img.dataset.full || img.currentSrc || img.src}" alt="${esc(img.alt)}">`; lb.addEventListener('click', () => lb.remove()); document.body.appendChild(lb);
   });
-
-  // deep links: noroll.studio/#keboola, #kiwi/fare-families, old ids redirect
-  const hash = decodeURIComponent(location.hash.slice(1));
-  const hid = ((D.redirects && D.redirects[hash]) || hash).split('/')[0];
-  if (byId[hid]) openProject(hash);
-  else if (openers[hash]) openers[hash]();
+  route();
 })();

@@ -7,7 +7,7 @@ window.NOROLL = {
   owner: {
     name: 'Veronika Dominiková',
     short: 'Veru',
-    email: 'hello@noroll.studio',            // TODO: confirm address
+    email: 'veronikadominikova@gmail.com',
     linkedin: 'https://www.linkedin.com/in/veronika-dominikova/',
     formspree: 'https://formspree.io/f/mnjrqrkj',
     wallpaper: 'assets/img/wallpaper.jpg',
@@ -131,6 +131,8 @@ window.NOROLL = {
       "client": "Kiwi.com",
       "cover": "assets/img/work/cover-kiwi.jpg",
       "hero": "assets/img/work/kiwi-hero.jpg",
+      "reel": "assets/video/kiwi-showreel.mp4",
+      "poster": "assets/img/work/kiwi-reel-poster.jpg",
       "heroAlt": "Kiwi.com mobile screens: bundles, Guarantee, booking, insurance, seat map",
       "facts": [
         [
@@ -477,6 +479,8 @@ window.NOROLL = {
       "client": "Keboola",
       "cover": "assets/img/work/cover-keboola.jpg",
       "hero": "assets/img/work/kbc-hero.jpg",
+      "reel": "assets/video/keboola-showreel.mp4",
+      "poster": "assets/img/work/kbc-reel-poster.jpg",
       "heroAlt": "Keboola UI 2.0: dashboard and jobs overview",
       "facts": [
         [
@@ -505,6 +509,7 @@ window.NOROLL = {
         "Owned the website (Webflow), illustration system and launch campaigns"
       ],
       "chapters": [
+        {"id": "flows", "title": "Flow Builder", "kicker": "Data pipelines, block by block", "text": "Building a data pipeline as a visual flow: tasks grouped into phases, new configurations created in place, and a jobs view for what actually ran.", "images": [{"src": "assets/img/work/kbc-flow-builder.jpg", "w": 1436, "h": 1550, "alt": "Keboola Flow Builder with a pipeline of grouped tasks", "size": "half"}, {"src": "assets/img/work/kbc-flow-config.jpg", "w": 1436, "h": 1150, "alt": "Creating a new configuration inside a flow", "size": "half"}, {"src": "assets/img/work/kbc-jobs.jpg", "w": 1436, "h": 1240, "alt": "Jobs overview with status per component", "size": "half"}, {"src": "assets/img/work/kbc-dashboard.jpg", "w": 1436, "h": 1795, "alt": "Project dashboard overview", "size": "half"}]},
         {
           "id": "ui",
           "title": "Product UI 2.0",
@@ -929,6 +934,9 @@ window.NOROLL = {
       "x": 80,
       "y": 30
     },
+    {"id": "extit", "title": "EXTIT", "subtitle": "Website redesign + pricing calculator · 2026", "type": "Web design > B2B services, IT outsourcing", "client": "EXTIT by YOURWiFi", "cover": "assets/img/work/cover-extit.jpg", "hero": "assets/img/work/extit-hero.jpg", "heroAlt": "EXTIT homepage hero", "link": "https://extit.cz/", "facts": [["3", "service packages, from Basic to Premium"], ["1", "pricing calculator, driven by the client’s device count"]], "problem": "EXTIT sells outsourced IT to companies that would rather not think about IT. The site has to make a dull, invisible service feel like relief, and get a price conversation started without a sales call.", "text": "A full redesign of extit.cz: the message, the page structure and the visual system, plus a pricing calculator that estimates a monthly price from the number of computers, servers and other devices.", "chapters": [{"id": "site", "title": "The website", "kicker": "From “typical problems” to “start not dealing with it”", "text": "Problems first, then what changes, then the honest comparison with an in-house IT person, including the coffee machine.", "images": [{"src": "assets/img/work/extit-problems.jpg", "w": 1463, "h": 812, "alt": "What EXTIT solves, with client logos", "size": "half"}, {"src": "assets/img/work/extit-compare.jpg", "w": 1463, "h": 812, "alt": "In-house IT compared with EXTIT", "size": "half"}, {"src": "assets/img/work/extit-pricing.jpg", "w": 1463, "h": 812, "alt": "Service packages and the calculator entry point", "size": "full"}]}]},
+    {"id": "clash", "title": "Clash of Candles", "subtitle": "Web identity · 2026", "type": "Brand & web > Web identity", "client": "Clash of Candles", "cover": "assets/img/work/cover-clash.jpg", "hero": "assets/img/work/clash-hero.jpg", "heroAlt": "Clash of Candles homepage hero", "link": "https://www.clashofcandles.cz/en/", "text": "We’re building a skill-based game. The game itself stays under wraps for now, so here’s the part that’s already public: the web identity, from the fighting candles to the pre-launch site.", "chapters": [{"id": "web", "title": "Web identity", "kicker": "Pre-launch site", "images": [{"src": "assets/img/work/clash-cta.jpg", "w": 1440, "h": 733, "alt": "Clash of Candles early-access section", "size": "full"}, {"src": "assets/img/work/clash-mobile.jpg", "w": 1710, "h": 904, "alt": "Clash of Candles on mobile", "size": "full"}]}]},
+    {"id": "fameplay", "title": "Fameplay", "subtitle": "AI studio identity & campaigns", "type": "Brand > Identity, key visuals, campaigns", "client": "Fameplay", "cover": "assets/img/work/cover-fameplay.jpg", "hero": "assets/img/work/x-fameplay-chrome-logo.jpg", "heroAlt": "Chromatic Fameplay logo", "text": "Brand system and key visuals for the AI studio: the chromatic logo and humanoid, type, icon set, the Avatar Pioneers event series with HeyGen, and campaign visuals.", "chapters": [{"id": "identity", "title": "Identity", "kicker": "Chromatic logo and humanoid", "images": [{"src": "assets/img/work/x-fameplay-chrome-logo.jpg", "w": 1600, "h": 982, "alt": "Chromatic Fameplay logo with humanoid", "size": "half"}, {"src": "assets/img/work/x-fameplay-chrome-logo2.jpg", "w": 1600, "h": 826, "alt": "Chromatic Fameplay wordmark", "size": "half"}, {"src": "assets/img/work/x-fameplay-humanoid.jpg", "w": 1525, "h": 1450, "alt": "Chromatic humanoid, Fameplay key visual", "size": "half"}]}, {"id": "campaigns", "title": "Campaigns", "kicker": "Key visuals, events, social", "images": [{"src": "assets/img/work/x-fameplay-store.jpg", "w": 1600, "h": 897, "alt": "Fameplay campaign visual", "size": "half"}, {"src": "assets/img/work/x-fameplay-face.jpg", "w": 1600, "h": 897, "alt": "Fameplay AI campaign visual", "size": "half"}, {"src": "assets/img/work/x-fameplay-0.jpg", "w": 1600, "h": 3222, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-1.jpg", "w": 1600, "h": 3389, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-19.jpg", "w": 1600, "h": 3636, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-20.jpg", "w": 1600, "h": 1439, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-23.jpg", "w": 1600, "h": 836, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-27.jpg", "w": 1600, "h": 836, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-43.jpg", "w": 1418, "h": 1418, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-44.jpg", "w": 1600, "h": 2125, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-45.jpg", "w": 1600, "h": 2125, "alt": "Fameplay brand and campaign visual", "size": "third"}, {"src": "assets/img/work/x-fameplay-51.jpg", "w": 1600, "h": 1600, "alt": "Fameplay brand and campaign visual", "size": "third"}]}]},
     {
       "id": "pflb",
       "title": "PFLB",
@@ -1147,123 +1155,10 @@ window.NOROLL = {
       "type": "Brand & visual design",
       "client": "Various",
       "cover": "assets/img/work/cover-extras.jpg",
-      "hero": "assets/img/work/x-fameplay-chrome-logo.jpg",
-      "heroAlt": "Chromatic Fameplay logo",
+      "hero": "assets/img/work/x-kurnik-3.jpg",
+      "heroAlt": "Kurník Šopa identity",
       "text": "The other half of the brain. Identities, campaign systems and posters, mostly for small teams that needed a whole brand, not just a logo.",
       "chapters": [
-        {
-          "id": "fameplay",
-          "title": "Fameplay",
-          "kicker": "AI studio brand & campaigns",
-          "text": "Brand system and key visuals for the AI studio: the chromatic logo and humanoid, type, icon set, the Avatar Pioneers event series with HeyGen, and campaign visuals.",
-          "images": [
-            {
-              "src": "assets/img/work/x-fameplay-chrome-logo.jpg",
-              "w": 1600,
-              "h": 982,
-              "alt": "Chromatic Fameplay logo with humanoid",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-chrome-logo2.jpg",
-              "w": 1600,
-              "h": 826,
-              "alt": "Chromatic Fameplay wordmark",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-humanoid.jpg",
-              "w": 1525,
-              "h": 1450,
-              "alt": "Chromatic humanoid, Fameplay key visual",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-store.jpg",
-              "w": 1600,
-              "h": 897,
-              "alt": "Fameplay campaign visual",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-face.jpg",
-              "w": 1600,
-              "h": 897,
-              "alt": "Fameplay AI campaign visual",
-              "size": "half"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-0.jpg",
-              "w": 1600,
-              "h": 3222,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-1.jpg",
-              "w": 1600,
-              "h": 3389,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-19.jpg",
-              "w": 1600,
-              "h": 3636,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-20.jpg",
-              "w": 1600,
-              "h": 1439,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-23.jpg",
-              "w": 1600,
-              "h": 836,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-27.jpg",
-              "w": 1600,
-              "h": 836,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-43.jpg",
-              "w": 1418,
-              "h": 1418,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-44.jpg",
-              "w": 1600,
-              "h": 2125,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-45.jpg",
-              "w": 1600,
-              "h": 2125,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            },
-            {
-              "src": "assets/img/work/x-fameplay-51.jpg",
-              "w": 1600,
-              "h": 1600,
-              "alt": "Fameplay brand and campaign visual",
-              "size": "third"
-            }
-          ]
-        },
         {
           "id": "kurnik",
           "title": "Kurník Šopa",
@@ -1383,33 +1278,32 @@ window.NOROLL = {
   /* ---------------- ABOUT ---------------- */
   about: {
     intro: [
-      'I design digital products, apps and websites. Lately I also direct AI films. Same job, different render time: make it work, then make it look like nobody struggled.',
+      'I design digital products, apps and websites. I also direct AI campaigns. Same job, different render time: make it work, then make it look like nobody struggled.',
       'I was raised in a business environment and later ran my own company, so product development, agile, client calls and leading teams aren’t things I read about. They’re things I’ve survived.',
-      'In the field since 2018. Still curious. Slightly less patient.',
+      'In the field since 2016. Still curious. Slightly less patient.',
     ],
     canDo: [
-      'AI cinematic production',
-      'Creative direction',
       'Product design (UX, UI)',
+      'Monetization & complex flows',
+      'Design team leadership',
       'User research',
       'Design systems',
-      'Design team leadership',
+      'Prototyping',
       'Web design & development',
       'Brand design',
-      'Prototyping',
-      'Storytelling & art direction',
+      'AI cinematic production',
+      'Creative direction',
     ],
     cv: [
-      { when: '2026 – now',  what: 'Creative Director & Founder', where: 'NO ROLL studio' },
-      { when: '2024 – 2026', what: 'AI Creative Director', where: 'Fameplay, Prague' },
-      { when: '2024',        what: 'Career break: teaching first aid & mountaineering', where: 'Nepal' },
-      { when: '2022 – 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com' },
-      { when: '2021 – 2022', what: 'Product Design Lead', where: 'Keboola' },
-      { when: '2020 – 2021', what: 'Designer, Web & Brand', where: 'Keboola' },
-      { when: '2020 – 2026', what: 'Freelance Creative', where: 'Remote' },
-      { when: '2019 – 2020', what: 'Senior Product Designer', where: 'SinnerSchrader, Frankfurt / Prague' },
-      { when: '2018 – 2019', what: 'CMO', where: 'CloseIT, Brno' },
-      { when: '2016 – 2018', what: 'Co-Founder & CCO', where: 'Naash, France' },
+      { when: 'Mar 2026 – now', what: 'Founder', where: 'NO ROLL studio' },
+      { when: 'Oct 2024 – Mar 2026', what: 'AI Art Lead', where: 'Fameplay, Prague' },
+      { when: 'Jul – Aug 2024', what: 'Career break: teaching first aid & mountaineering', where: 'Nepal' },
+      { when: 'Jun 2022 – May 2024', what: 'Product Design Team Lead, Ancillaries', where: 'Kiwi.com' },
+      { when: 'Mar 2021 – Oct 2022', what: 'Product Design Lead', where: 'Keboola' },
+      { when: 'Feb 2020 – Apr 2021', what: 'Designer, Web & Brand', where: 'Keboola' },
+      { when: 'Feb 2019 – Mar 2020', what: 'Senior Product Designer', where: 'SinnerSchrader, Frankfurt / Prague' },
+      { when: 'Feb 2018 – Jan 2019', what: 'CMO', where: 'CloseIT, Brno' },
+      { when: 'Oct 2016 – Dec 2018', what: 'Co-Founder', where: 'Naash, France' },
     ],
     references: [
       {
@@ -1423,10 +1317,15 @@ window.NOROLL = {
         role: 'VP of Product, Kiwi.com',
       },
     ],
+    path: 'After two years leading a revenue-critical domain at Kiwi.com, I stepped away from product design on purpose and spent the time going deep on AI, as AI Art Lead on campaigns for cinema and TV. It kept me making things, kept my creative side sharp, and changed how fast I work. Now I’m bringing that back to product. AI in audiovisual stays as the hobby I speak about.',
+    talks: [
+      { what: 'Speaker, Hack Your Way 2026, Brno: when AI video is an ace up your sleeve, and when you pay extra for the illusion of savings', url: 'https://www.hackyourway.cz/program/veronika-dominikova' },
+    ],
     fameplay: 'I joined the team awarded the first Emmy Award in Czech history for the original series #marty_is_dead. I produce and create AI cinematic videos combining storytelling, art direction and advanced AI workflows, focused on visuals that elevate products, services and ideas beyond standard AI content.',
     tools: [
+      'Figma', 'Webflow', 'GitHub', 'Claude MCP', 'Photoshop',
       'ComfyUI', 'Weavy', 'Magnific', 'Higgsfield', 'Midjourney', 'LoRA', 'Topaz',
-      'DaVinci Resolve', 'ElevenLabs', 'Photoshop', 'Figma', 'Webflow', 'GitHub', 'Claude MCP',
+      'DaVinci Resolve', 'ElevenLabs',
     ],
   },
 };
