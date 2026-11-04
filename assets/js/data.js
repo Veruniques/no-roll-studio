@@ -1328,7 +1328,7 @@ window.NOROLL = {
         letter: 'assets/docs/reference-michal-sindelar.pdf',
       },
     ],
-    path: 'After two years leading a revenue-critical domain at Kiwi.com, I stepped away from full-time product leadership on purpose and went deep on AI, as Creative Art Director on AI campaigns for cinema and TV, while still doing product design for PFLB until mid-2025. It kept me making things, kept my creative side sharp, and changed how fast I work. Now I’m bringing that back to product. AI in audiovisual stays as the hobby I speak about.',
+    path: 'After two years leading a revenue-critical domain at Kiwi.com, I designed the PFLB load-testing platform and art-directed campaigns for cinema and TV. A different medium kept my craft sharp and changed how fast I work. Now I’m focusing on product again, full-time. AI in audiovisual stays as the hobby I speak about.',
     talks: [
       { what: 'Speaker, Hack Your Way 2026, Brno: when AI video is an ace up your sleeve, and when you pay extra for the illusion of savings', url: 'https://www.hackyourway.cz/program/veronika-dominikova' },
     ],

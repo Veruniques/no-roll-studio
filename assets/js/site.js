@@ -25,7 +25,14 @@
   requestAnimationFrame(tick);
 
   const rows = list => `<div class="list">${list.map(p => `<a class="row" href="#${p.id}"><img data-thumb="${p.id}" src="${thumb(p)}" alt="" loading="lazy"><span><b>${esc(p.title)}</b><small>${esc(p.subtitle)}</small></span><em>${p.reel ? 'Showreel' : p.vimeo ? 'Film' : 'Case study'}</em></a>`).join('')}</div>`;
-  const career = () => `<div class="career">${A.cv.map(r => `<div class="cvr"><span>${esc(r.when)}</span><div><b>${esc(r.what)}</b><small>${esc(r.where)}</small>${r.text ? `<p>${esc(r.text)}</p>` : ''}${r.link ? `<a href="#${r.link}">See the case study ›</a>` : ''}</div></div>`).join('')}</div>`;
+  const MON = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+  const span = w => {
+    const [a, b] = w.split(' – '), now = new Date(), e = b === 'now' ? [now.getFullYear(), now.getMonth()] : [+b.split(' ')[1], MON.indexOf(b.split(' ')[0])];
+    const ap = a.split(' '), st = [ap[1] ? +ap[1] : e[0], MON.indexOf(ap[0])], mo = (e[0] - st[0]) * 12 + e[1] - st[1] + 1;
+    const y = Math.floor(mo / 12), m = mo % 12;
+    return { mo, years: b === 'now' ? `${st[0]} – now` : st[0] === e[0] ? `${st[0]}` : `${st[0]} – ${e[0]}`, dur: [y ? `${y} yr${y > 1 ? 's' : ''}` : '', m ? `${m} mo${m > 1 ? 's' : ''}` : ''].filter(Boolean).join(' ') };
+  };
+  const career = () => { const list = A.cv.map(r => ({ r, t: span(r.when) })), max = Math.max(...list.map(x => x.t.mo)); return `<div class="career">${list.map(({ r, t }) => `<div class="cvr"><div class="cvr__t"><b class="cvr__y">${esc(t.years)}</b><span class="cvr__d">${esc(t.dur)}</span><i class="cvr__bar" aria-hidden="true"><i style="width:${Math.max(6, Math.round(t.mo / max * 100))}%"></i></i></div><div class="cvr__b"><b>${esc(r.what)}</b><small>${esc(r.where)} · ${esc(r.when)}</small>${r.text ? `<p>${esc(r.text)}</p>` : ''}${r.link ? `<a href="#${r.link}">See the case study ›</a>` : ''}</div></div>`).join('')}</div>`; };
   const talks = () => A.talks.map(t => `<li>${t.url ? `<a href="${t.url}" target="_blank" rel="noopener">${esc(t.what)}</a>` : esc(t.what)}</li>`).join('');
   const works = () => `<section class="section" id="work"><div class="count">${String(main.length).padStart(2, '0')} <i>case studies</i></div>${rows(main)}</section>`;
 
