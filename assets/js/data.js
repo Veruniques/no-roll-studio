@@ -1319,11 +1319,13 @@ window.NOROLL = {
         text: 'Veronika joined our ancillary design team during a critical phase when the product team was under massive pressure to change its modus operandi, scale our ancillary offering, and achieve ambitious targets. Despite the challenges, she demonstrated remarkable resilience, effectively guiding a team of three product designers, a content designer, and a UX researcher… Her facilitation skills enabled her to collaborate with product managers and engage directly with C-level executives in frequent working sessions. Veronika also demonstrated hands-on product design skills with an emphasis on visual design.',
         who: 'Vladimir Končar',
         role: 'VP of Design and Research, Kiwi.com',
+        letter: 'assets/docs/reference-vladimir-koncar.pdf',
       },
       {
         text: 'I want to highlight Veronika’s consistent display of a combination of users’ empathy and contribution to the business goals. Throughout her time in our domain, she skillfully managed to take over an existing team of product designers and participated in domain leadership with the product and engineering counterparts.',
         who: 'Michal Šindelář',
         role: 'VP of Product, Kiwi.com',
+        letter: 'assets/docs/reference-michal-sindelar.pdf',
       },
     ],
     path: 'After two years leading a revenue-critical domain at Kiwi.com, I stepped away from product design on purpose and spent the time going deep on AI, as Creative Art Director on AI campaigns for cinema and TV. It kept me making things, kept my creative side sharp, and changed how fast I work. Now I’m bringing that back to product. AI in audiovisual stays as the hobby I speak about.',

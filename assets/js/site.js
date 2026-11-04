@@ -72,7 +72,7 @@
       <div class="tags">${A.canDo.map(c => `<span>${esc(c)}</span>`).join('')}</div>
       <div class="ch"><h2>On stage</h2><ul class="ul">${talks()}</ul></div>
       <div class="ch"><h2>CV</h2>${career()}<div class="cta"><a class="btn btn--g" href="resume.html">Plain-text CV</a><a class="btn btn--g" href="${D.owner.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div></div>
-      <div class="ch"><h2>What people say</h2>${A.references.map(r => `<blockquote class="quote">“${esc(r.text)}”<cite>${esc(r.who)}, ${esc(r.role)}</cite></blockquote>`).join('')}</div>
+      <div class="ch"><h2>What people say</h2>${A.references.map(r => `<blockquote class="quote">“${esc(r.text)}”<cite>${esc(r.who)}, ${esc(r.role)}${r.letter ? ` · <a href="${r.letter}" target="_blank" rel="noopener">Read the full letter (PDF)</a>` : ''}</cite></blockquote>`).join('')}</div>
       <div class="ch"><h2>Tools</h2><div class="tags">${A.tools.map(t => `<span>${esc(t)}</span>`).join('')}</div></div></section>`;
   }
 
