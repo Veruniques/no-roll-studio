@@ -284,7 +284,7 @@ window.NOROLL = {
           "id": "fare-families",
           "title": "Fare Families",
           "kicker": "Airline partnerships, end-to-end ownership",
-          "text": "Kiwi.com started selling airlines’ own fare families (Light, Standard, Flex…) for Air France-KLM, Lufthansa and Virgin Atlantic. Each airline has different rules for bags, seats, changes and refunds. My project from the first sketch to handoff: phase 1 desktop MVP, then responsive and native, including the parts nobody wants to design: refunds, assisted refunds, changes that can’t be done automatically, and the customer-service tool.",
+          "text": "Kiwi.com started selling airlines’ own fare families (Light, Standard, Flex…) for Ryanair and Air France-KLM. Each airline has different rules for bags, seats, changes and refunds. My project from the first sketch to handoff: phase 1 desktop MVP, then responsive and native, including the parts nobody wants to design: refunds, assisted refunds, changes that can’t be done automatically, and the customer-service tool.",
           "images": [
             {
               "src": "assets/img/work/kiwi-ff-desktop.jpg",
