@@ -54,7 +54,7 @@
       h: 'Hi Revolut.', s: 'This page exists for one reader. Hopefully you.',
       lead: 'I design commercial products end to end, on iOS, Android and web, in places where a tap has to earn something and a wrong one means a refund. Here’s the short route through my work, in the order I’d show it in the room.',
       why: [
-        ['Discovery to delivery, on all three platforms', 'Fare Families at Kiwi.com: from the first sketch to handoff on web, iOS and Android, including refunds and the customer-service tool.', 'See Fare Families', 'kiwi/fare-families'],
+        ['Discovery to delivery, on all three platforms', 'Fare Families at Kiwi.com: from the first sketch to shipping with Ryanair and Air France-KLM, on web, iOS and Android, including refunds and the customer-service tool.', 'See Fare Families', 'kiwi/fare-families'],
         ['Decisions I can defend', 'One feature, from the ticket and benchmark to design critique and what we took forward.', 'Read the decision story', 'kiwi/decision'],
         ['Details that earn money', 'Co-led Ancillaries at Kiwi.com, with a goal of €2 to €25 per booking and double the overall revenue. We A/B tested variants and kept what performed, using revenue, CX feedback, UX research and quantitative data.', 'See Bundles', 'kiwi/bundles'],
         ['Tested before building, reviewed after release', 'At Keboola I led interviews on prototypes before development, then post-release interviews and funnel reviews to see where users dropped off.', 'See how I test', 'keboola/testing'],
